@@ -64,7 +64,7 @@ export const brandsWithIcon = [
   { id: "porsche", label: "Porsche", icon: LandmarkIcon },
   { id: "opel", label: "Opel", icon: CarFrontIcon },
 ];
-function ShoppingHome() {
+function ShoppingMainHome() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const { productList, productDetails } = useSelector(
     (state) => state.shopProducts
@@ -248,4 +248,4 @@ function ShoppingHome() {
   );
 }
 
-export default ShoppingHome;
+export default ShoppingMainHome;

@@ -108,6 +108,38 @@ export const addProductFormElements = [
     placeholder: "Enter total stock",
   },
 ];
+export const shoppingViewMainHeaderMenuItems = [
+  {
+    id: "homemain",
+    label: "Homemain",
+    path: "/main/home",
+  },
+  {
+    id: "about",
+    label: "About Us",
+    path: "/main/about",
+  },
+  {
+    id: "faq",
+    label: "Your Questions",
+    path: "/main/faq",
+  },
+  {
+    id: "sell",
+    label: "Sell Your Car With Us",
+    path: "/main/sell-car",
+  },
+  {
+    id: "carparts",
+    label: "Car Parts",
+    path: "/shop/home",
+  },
+  {
+    id: "cars",
+    label: "Cars",
+    path: "/cars/home",
+  },
+];
 
 export const shoppingViewHeaderMenuItems = [
   {

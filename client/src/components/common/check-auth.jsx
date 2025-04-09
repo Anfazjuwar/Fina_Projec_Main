@@ -3,56 +3,45 @@ import { Navigate, useLocation } from "react-router-dom";
 function CheckAuth({ isAuthenticated, user, children }) {
   const location = useLocation();
 
-  console.log(location.pathname, isAuthenticated);
-
+  // Redirect from "/" based on role
   if (location.pathname === "/") {
-    if (!isAuthenticated) {
-      return <Navigate to="/auth/login" />;
-    } else {
-      if (user?.role === "admin") {
-        return <Navigate to="/admin/dashboard" />;
-      } else {
-        return <Navigate to="/shop/home" />;
-      }
-    }
+    if (!isAuthenticated) return <Navigate to="/auth/login" />;
+    if (user?.role === "admin") return <Navigate to="/admin/dashboard" />;
+    return <Navigate to="/shop/home" />;
   }
 
+  // Block access to /admin/* routes for non-admins
   if (
-    !isAuthenticated &&
-    !(
-      location.pathname.includes("/login") ||
-      location.pathname.includes("/register")
-    )
+    location.pathname.includes("/admin") &&
+    (!isAuthenticated || user?.role !== "admin")
+  ) {
+    return <Navigate to="/unauth-page" />;
+  }
+
+  // Block access to user-specific pages like checkout/account if not authenticated
+  if (
+    [
+      "/shop/checkout",
+      "/shop/account",
+      "/shop/payment-success",
+      "/shop/paypal-return",
+    ].includes(location.pathname) &&
+    !isAuthenticated
   ) {
     return <Navigate to="/auth/login" />;
   }
 
+  // Prevent logged-in users from accessing /login or /register
   if (
     isAuthenticated &&
     (location.pathname.includes("/login") ||
       location.pathname.includes("/register"))
   ) {
-    if (user?.role === "admin") {
-      return <Navigate to="/admin/dashboard" />;
-    } else {
-      return <Navigate to="/shop/home" />;
-    }
-  }
-
-  if (
-    isAuthenticated &&
-    user?.role !== "admin" &&
-    location.pathname.includes("admin")
-  ) {
-    return <Navigate to="/unauth-page" />;
-  }
-
-  if (
-    isAuthenticated &&
-    user?.role === "admin" &&
-    location.pathname.includes("shop")
-  ) {
-    return <Navigate to="/admin/dashboard" />;
+    return user?.role === "admin" ? (
+      <Navigate to="/admin/dashboard" />
+    ) : (
+      <Navigate to="/shop/home" />
+    );
   }
 
   return <>{children}</>;
