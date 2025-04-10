@@ -1,9 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter } from "../ui/card";
-import { fetchProductDetails } from "@/store/shop/products-slice";
-import { useEffect, useState } from "react";
-import ProductDetailsDialogAdmin from "./productdeatilsAdmin";
 
 function AdminProductTile({
   product,

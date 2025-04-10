@@ -35,6 +35,7 @@ function MenuItems() {
 
   function handleNavigate(getCurrentMenuItem) {
     sessionStorage.removeItem("filters");
+
     const currentFilter =
       getCurrentMenuItem.id !== "home" &&
       getCurrentMenuItem.id !== "products" &&
@@ -44,13 +45,17 @@ function MenuItems() {
           }
         : null;
 
-    sessionStorage.setItem("filters", JSON.stringify(currentFilter));
-
-    location.pathname.includes("listing") && currentFilter !== null
-      ? setSearchParams(
-          new URLSearchParams(`?category=${getCurrentMenuItem.id}`)
-        )
-      : navigate(getCurrentMenuItem.path);
+    if (
+      location.pathname === "/shop/listing" &&
+      getCurrentMenuItem.path === "/shop/listing"
+    ) {
+      sessionStorage.setItem("filters", JSON.stringify(currentFilter));
+      setSearchParams(
+        new URLSearchParams(`?category=${getCurrentMenuItem.id}`)
+      );
+    } else {
+      navigate(getCurrentMenuItem.path);
+    }
   }
 
   return (
@@ -140,7 +145,7 @@ function ShoppingMainHeader() {
       <div className="flex items-center justify-between h-16 px-4 md:px-6">
         <Link to="/shop/home" className="flex items-center gap-2">
           <HousePlug className="w-6 h-6" />
-          <span className="font-bold">NJ Trust Parts</span>
+          <span className="font-bold">NJ Company E-Commerce Platform</span>
         </Link>
         <Sheet>
           <SheetTrigger asChild>

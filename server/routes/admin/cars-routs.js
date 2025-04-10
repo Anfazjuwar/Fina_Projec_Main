@@ -12,7 +12,7 @@ const {
 const router = express.Router();
 
 // Upload car image (single)
-router.post("/upload-image", upload.single("myfile"), handleImageUpload);
+router.post("/upload-image", upload.single("my_file"), handleImageUpload);
 
 // Add new car
 router.post("/add", addCar);

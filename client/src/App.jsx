@@ -26,8 +26,10 @@ import UnauthPage from "./pages/unauth-page";
 import NotFound from "./pages/not-found";
 import { Skeleton } from "@/components/ui/skeleton";
 import MainlayOut from "./components/MainHome.jsx/layOutMain";
-import ShoppingMainHeader from "./components/MainHome.jsx/Mainhome";
+
 import ShoppingMainHome from "./components/MainHome.jsx/Mainhome";
+import AdminCars from "./pages/admin-view/Cars";
+import Admincars from "./pages/admin-view/Cars";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -44,12 +46,15 @@ function App() {
   const redirectFromRoot = () => {
     if (!isAuthenticated) return <Navigate to="/auth/login" />;
     if (user?.role === "admin") return <Navigate to="/admin/dashboard" />;
-    return <Navigate to="/shop/home" />;
+    return <Navigate to="/main/home" />;
   };
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
       <Routes>
+        {/* <Route path="/main" element={<MainlayOut />}>
+          <Route path="home" element={<ShoppingMainHome />} />
+        </Route> */}
         {/* Auth (no MainLayout) */}
         <Route path="/auth" element={<AuthLayout />}>
           <Route
@@ -59,7 +64,7 @@ function App() {
                 user?.role === "admin" ? (
                   <Navigate to="/admin/dashboard" />
                 ) : (
-                  <Navigate to="/shop/home" />
+                  <Navigate to="/main/home" />
                 )
               ) : (
                 <AuthLogin />
@@ -73,7 +78,7 @@ function App() {
                 user?.role === "admin" ? (
                   <Navigate to="/admin/dashboard" />
                 ) : (
-                  <Navigate to="/shop/home" />
+                  <Navigate to="/main/home" />
                 )
               ) : (
                 <AuthRegister />
@@ -81,35 +86,36 @@ function App() {
             }
           />
         </Route>
+        {/* Admin Routes */}
+        {/* Admin Protected */}
+        <Route
+          path="/admin"
+          element={
+            !isAuthenticated || user?.role !== "admin" ? (
+              <Navigate to="/unauth-page" />
+            ) : (
+              <AdminLayout />
+            )
+          }
+        >
+          <Route path="admincars" element={<Admincars />} />
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="products" element={<AdminProducts />} />
+          <Route path="orders" element={<AdminOrders />} />
+          <Route path="features" element={<AdminFeatures />} />
+        </Route>
 
         {/* Everything else with MainlayOut */}
-        <Route element={<MainlayOut />}>
-          <Route path="/" element={redirectFromRoot()} />
+        {/* Main Layout for Users */}
+        <Route path="/" element={<MainlayOut />}>
+          {/* Home */}
+          <Route path="main/home" element={<ShoppingMainHome />} />
 
-          {/* Admin Protected */}
-          <Route
-            path="/admin"
-            element={
-              !isAuthenticated || user?.role !== "admin" ? (
-                <Navigate to="/unauth-page" />
-              ) : (
-                <AdminLayout />
-              )
-            }
-          >
-            <Route path="dashboard" element={<AdminDashboard />} />
-            <Route path="products" element={<AdminProducts />} />
-            <Route path="orders" element={<AdminOrders />} />
-            <Route path="features" element={<AdminFeatures />} />
-          </Route>
-
-          {/* Customer Routes */}
-          <Route path="/shop" element={<ShoppingLayout />}>
+          {/* Shop Layout */}
+          <Route path="shop" element={<ShoppingLayout />}>
             <Route path="home" element={<ShoppingHome />} />
             <Route path="listing" element={<ShoppingListing />} />
             <Route path="search" element={<SearchProducts />} />
-
-            {/* Protected user routes */}
             <Route
               path="checkout"
               element={
@@ -151,13 +157,10 @@ function App() {
               }
             />
           </Route>
-          <Route path="/main" element={<MainlayOut />} />
-          <Route path="/main/home" element={<ShoppingMainHome />} />
-
-          {/* Other Pages */}
-          <Route path="/unauth-page" element={<UnauthPage />} />
-          <Route path="*" element={<NotFound />} />
         </Route>
+        {/* Other Pages */}
+        <Route path="/unauth-page" element={<UnauthPage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );

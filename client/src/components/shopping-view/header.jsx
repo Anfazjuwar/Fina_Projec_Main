@@ -110,11 +110,11 @@ function HeaderRightContent() {
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Avatar className="bg-black">
+          {/* <Avatar className="bg-black">
             <AvatarFallback className="font-extrabold text-white bg-black">
               {user?.userName[0].toUpperCase()}
             </AvatarFallback>
-          </Avatar>
+          </Avatar> */}
         </DropdownMenuTrigger>
         <DropdownMenuContent side="right" className="w-56">
           <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
@@ -149,7 +149,7 @@ function ShoppingHeader() {
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   return (
-    <header className="sticky top-0 z-40 w-full mt-48 border-b bg-background">
+    <header className="sticky top-0 z-40 w-full mt-0 border-b bg-background">
       <div className="flex items-center justify-between h-16 px-4 md:px-6">
         <Link to="/shop/home" className="flex items-center gap-2">
           <HousePlug className="w-6 h-6" />

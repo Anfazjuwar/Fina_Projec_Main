@@ -9,6 +9,8 @@ import {
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
+import { Radio } from "lucide-react";
+import { Checkbox } from "../ui/checkbox";
 
 function CommonForm({
   formControls,
@@ -84,6 +86,36 @@ function CommonForm({
           />
         );
 
+        break;
+      case "checkbox":
+        element = (
+          <Checkbox
+            name={getControlItem.name}
+            id={getControlItem.name}
+            checked={value}
+            onCheckedChange={(checked) =>
+              setFormData({
+                ...formData,
+                [getControlItem.name]: checked,
+              })
+            }
+          />
+        );
+        break;
+      case "radio":
+        element = (
+          <Radio
+            name={getControlItem.name}
+            id={getControlItem.name}
+            value={value}
+            onCheckedChange={(checked) =>
+              setFormData({
+                ...formData,
+                [getControlItem.name]: checked,
+              })
+            }
+          />
+        );
         break;
 
       default:
