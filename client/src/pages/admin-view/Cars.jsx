@@ -18,12 +18,7 @@ import {
   editCar,
   fetchAllCars,
 } from "@/store/admin/carProSilce";
-import {
-  addNewProduct,
-  deleteProduct,
-  editProduct,
-  fetchAllProducts,
-} from "@/store/admin/products-slice";
+
 import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 

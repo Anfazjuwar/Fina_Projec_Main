@@ -3,68 +3,64 @@ import { Button } from "../ui/button";
 import { brandOptionsMap, categoryOptionsMap } from "@/config";
 import { Badge } from "../ui/badge";
 
-function ShoppingProductTile({
-  product,
-  handleGetProductDetails,
-  handleAddtoCart,
-}) {
+function CarTile({ car, handleGetProductDetails, handleAddtoCart }) {
   return (
     <Card className="w-full max-w-sm mx-auto">
-      <div onClick={() => handleGetProductDetails(product?._id)}>
+      <div onClick={() => handleGetProductDetails(car?._id)}>
         <div className="relative">
           <img
-            src={product?.image}
-            alt={product?.title}
+            src={car?.image}
+            alt={car?.title}
             className="w-full h-[300px] object-cover rounded-t-lg"
           />
-          {product?.totalStock === 0 ? (
+          {car?.totalStock === 0 ? (
             <Badge className="absolute bg-red-500 top-2 left-2 hover:bg-red-600">
               Out Of Stock
             </Badge>
-          ) : product?.totalStock < 10 ? (
+          ) : car?.totalStock < 10 ? (
             <Badge className="absolute bg-red-500 top-2 left-2 hover:bg-red-600">
-              {`Only ${product?.totalStock} items left`}
+              {`Only ${car?.totalStock} left`}
             </Badge>
-          ) : product?.salePrice > 0 ? (
+          ) : car?.salePrice > 0 ? (
             <Badge className="absolute bg-red-500 top-2 left-2 hover:bg-red-600">
               Sale
             </Badge>
           ) : null}
         </div>
         <CardContent className="p-4">
-          <h2 className="mb-2 text-xl font-bold">{product?.title}</h2>
+          <h2 className="mb-2 text-xl font-bold">{car?.title}</h2>
           <div className="flex items-center justify-between mb-2">
             <span className="text-[16px] text-muted-foreground">
-              {categoryOptionsMap[product?.category]}
+              {categoryOptionsMap[car?.category]}
             </span>
             <span className="text-[16px] text-muted-foreground">
-              {brandOptionsMap[product?.brand]}
+              {brandOptionsMap[car?.brand]}
             </span>
           </div>
           <div className="flex items-center justify-between mb-2">
             <span
               className={`${
-                product?.salePrice > 0 ? "line-through" : ""
+                car?.salePrice > 0 ? "line-through" : ""
               } text-lg font-semibold text-primary`}
             >
-              ${product?.price}
+              ${car?.price}
             </span>
-            {product?.salePrice > 0 ? (
+            {car?.salePrice > 0 ? (
               <span className="text-lg font-semibold text-primary">
-                ${product?.salePrice}
+                ${car?.salePrice}
               </span>
             ) : null}
           </div>
         </CardContent>
       </div>
       <CardFooter>
-        {product?.totalStock === 0 ? (
+        {car?.totalStock === 0 ? (
           <Button className="w-full cursor-not-allowed opacity-60">
             Out Of Stock
           </Button>
         ) : (
           <Button
-            onClick={() => handleAddtoCart(product?._id, product?.totalStock)}
+            onClick={() => handleAddtoCart(car?._id, car?.totalStock)}
             className="w-full"
           >
             Add to cart
@@ -75,4 +71,4 @@ function ShoppingProductTile({
   );
 }
 
-export default ShoppingProductTile;
+export default CarTile;

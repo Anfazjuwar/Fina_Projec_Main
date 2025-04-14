@@ -11,72 +11,100 @@ import {
   TableRow,
 } from "../ui/table";
 import ShoppingOrderDetailsView from "./order-details";
+// import CarOrderDetailsView from "./car-order-details"; // ✅ Optional: if you have one
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllOrdersByUserId,
   getOrderDetails,
   resetOrderDetails,
 } from "@/store/shop/order-slice";
+// import {
+//   getAllCarOrdersByUser,
+//   getCarOrderDetails,
+//   resetCarOrderDetails,
+// } from "@/store/Cars/cars-slice"; // ✅ Adjust path if needed
 import { Badge } from "../ui/badge";
+import CarOrderDetailsView from "../CarsShopping/carOrder-details";
+import {
+  getAllCarOrdersByUser,
+  getCarOrderDetails,
+  resetCarOrderDetails,
+} from "@/store/Cars/order-silce/order";
 
 function ShoppingOrders() {
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
+  const [openCarDetailsDialog, setOpenCarDetailsDialog] = useState(false);
+
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { orderList, orderDetails } = useSelector((state) => state.shopOrder);
-
-  function handleFetchOrderDetails(getId) {
-    dispatch(getOrderDetails(getId));
-  }
-
-  useEffect(() => {
-    dispatch(getAllOrdersByUserId(user?.id));
-  }, [dispatch]);
+  const { orderList: carList, orderDetails: carDetails } = useSelector(
+    (state) => state.carOrder
+  );
 
   useEffect(() => {
-    if (orderDetails !== null) setOpenDetailsDialog(true);
+    if (user?.id) {
+      dispatch(getAllOrdersByUserId(user?.id));
+      dispatch(getAllCarOrdersByUser(user?.id));
+    }
+  }, [dispatch, user]);
+
+  const handleFetchOrderDetails = (id) => {
+    dispatch(getOrderDetails(id));
+  };
+
+  const handleFetchCarOrderDetails = (id) => {
+    dispatch(getCarOrderDetails(id));
+  };
+
+  useEffect(() => {
+    if (orderDetails) setOpenDetailsDialog(true);
   }, [orderDetails]);
 
-  console.log(orderDetails, "orderDetails");
+  useEffect(() => {
+    if (carDetails) setOpenCarDetailsDialog(true);
+  }, [carDetails]);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Order History</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Order ID</TableHead>
-              <TableHead>Order Date</TableHead>
-              <TableHead>Order Status</TableHead>
-              <TableHead>Order Price</TableHead>
-              <TableHead>
-                <span className="sr-only">Details</span>
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {orderList && orderList.length > 0
-              ? orderList.map((orderItem) => (
-                  <TableRow>
-                    <TableCell>{orderItem?._id}</TableCell>
-                    <TableCell>{orderItem?.orderDate.split("T")[0]}</TableCell>
+    <div className="space-y-10">
+      {/* Product Orders */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Order Histo (Parts)</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Order ID</TableHead>
+                <TableHead>Order Date</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Total</TableHead>
+                <TableHead>
+                  <span className="sr-only">Details</span>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {orderList?.length > 0 ? (
+                orderList.map((item) => (
+                  <TableRow key={item._id}>
+                    <TableCell>{item._id}</TableCell>
+                    <TableCell>{item.orderDate?.split("T")[0]}</TableCell>
                     <TableCell>
                       <Badge
                         className={`py-1 px-3 ${
-                          orderItem?.orderStatus === "confirmed"
+                          item.orderStatus === "confirmed"
                             ? "bg-green-500"
-                            : orderItem?.orderStatus === "rejected"
+                            : item.orderStatus === "rejected"
                             ? "bg-red-600"
                             : "bg-black"
                         }`}
                       >
-                        {orderItem?.orderStatus}
+                        {item.orderStatus}
                       </Badge>
                     </TableCell>
-                    <TableCell>${orderItem?.totalAmount}</TableCell>
+                    <TableCell>${item.totalAmount}</TableCell>
                     <TableCell>
                       <Dialog
                         open={openDetailsDialog}
@@ -86,9 +114,7 @@ function ShoppingOrders() {
                         }}
                       >
                         <Button
-                          onClick={() =>
-                            handleFetchOrderDetails(orderItem?._id)
-                          }
+                          onClick={() => handleFetchOrderDetails(item._id)}
                         >
                           View Details
                         </Button>
@@ -97,11 +123,94 @@ function ShoppingOrders() {
                     </TableCell>
                   </TableRow>
                 ))
-              : null}
-          </TableBody>
-        </Table>
-      </CardContent>
-    </Card>
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan="5"
+                    className="text-center text-muted-foreground"
+                  >
+                    No orders found.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+
+      {/* Car Orders */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Car Reserved Orders</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Order ID</TableHead>
+                <TableHead>Reserved Date</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Total</TableHead>
+                <TableHead>
+                  <span className="sr-only">Details</span>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {carList?.length > 0 ? (
+                carList.map((carItem) => (
+                  <TableRow key={carItem._id}>
+                    <TableCell>{carItem._id}</TableCell>
+                    <TableCell>{carItem.createdAt?.split("T")[0]}</TableCell>
+                    <TableCell>
+                      <Badge
+                        className={`py-1 px-3 ${
+                          carItem.orderStatus === "confirmed"
+                            ? "bg-green-500"
+                            : carItem.orderStatus === "rejected"
+                            ? "bg-red-600"
+                            : "bg-black"
+                        }`}
+                      >
+                        {carItem.orderStatus}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>${carItem.totalAmount}</TableCell>
+                    <TableCell>
+                      <Dialog
+                        open={openCarDetailsDialog}
+                        onOpenChange={() => {
+                          setOpenCarDetailsDialog(false);
+                          dispatch(resetCarOrderDetails());
+                        }}
+                      >
+                        <Button
+                          onClick={() =>
+                            handleFetchCarOrderDetails(carItem._id)
+                          }
+                        >
+                          View Details
+                        </Button>
+                        <CarOrderDetailsView orderDetails={carDetails} />
+                      </Dialog>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan="5"
+                    className="text-center text-muted-foreground"
+                  >
+                    No car orders found.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
 

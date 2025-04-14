@@ -30,6 +30,12 @@ import MainlayOut from "./components/MainHome.jsx/layOutMain";
 import ShoppingMainHome from "./components/MainHome.jsx/Mainhome";
 import AdminCars from "./pages/admin-view/Cars";
 import Admincars from "./pages/admin-view/Cars";
+import ShoppingCarLayout from "./components/CarsShopping/layout";
+import ShoppingCarHome from "./pages/cars-view/home";
+import ShoppingCarListing from "./pages/cars-view/listingcars";
+import CarCheckout from "./pages/cars-view/CheckOut";
+import AdminCarOrdersView from "./components/admin-view/Cars/car-order";
+import AdminCarOrders from "./pages/admin-view/carOrder";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -102,14 +108,41 @@ function App() {
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="products" element={<AdminProducts />} />
           <Route path="orders" element={<AdminOrders />} />
+          <Route path="carsOrders" element={<AdminCarOrders />} />
           <Route path="features" element={<AdminFeatures />} />
         </Route>
 
         {/* Everything else with MainlayOut */}
         {/* Main Layout for Users */}
         <Route path="/" element={<MainlayOut />}>
+          <Route
+            path="account"
+            element={
+              !isAuthenticated ? (
+                <Navigate to="/auth/login" />
+              ) : (
+                <ShoppingAccount />
+              )
+            }
+          />
           {/* Home */}
-          <Route path="main/home" element={<ShoppingMainHome />} />
+          {/* Cars */}
+          <Route path="/cars" element={<ShoppingCarLayout />}>
+            <Route path="home" element={<ShoppingCarHome />} />
+            <Route path="listing" element={<ShoppingCarListing />} />
+            <Route
+              path="checkout"
+              element={
+                !isAuthenticated ? (
+                  <Navigate to="/auth/login" />
+                ) : (
+                  <CarCheckout />
+                )
+              }
+            />
+          </Route>
+
+          {/* Cars */}
 
           {/* Shop Layout */}
           <Route path="shop" element={<ShoppingLayout />}>
@@ -126,16 +159,7 @@ function App() {
                 )
               }
             />
-            <Route
-              path="account"
-              element={
-                !isAuthenticated ? (
-                  <Navigate to="/auth/login" />
-                ) : (
-                  <ShoppingAccount />
-                )
-              }
-            />
+
             <Route
               path="paypal-return"
               element={

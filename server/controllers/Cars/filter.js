@@ -1,6 +1,7 @@
-const Product = require("../../models/Product");
+const Car = require("../../models/Cars");
 
-const getFilteredProducts = async (req, res) => {
+// Fetch filtered cars
+const getFilteredCars = async (req, res) => {
   try {
     const { category = [], brand = [], sortBy = "price-lowtohigh" } = req.query;
 
@@ -19,64 +20,60 @@ const getFilteredProducts = async (req, res) => {
     switch (sortBy) {
       case "price-lowtohigh":
         sort.price = 1;
-
         break;
       case "price-hightolow":
         sort.price = -1;
-
         break;
       case "title-atoz":
         sort.title = 1;
-
         break;
-
       case "title-ztoa":
         sort.title = -1;
-
         break;
-
       default:
         sort.price = 1;
         break;
     }
 
-    const products = await Product.find(filters).sort(sort);
+    const cars = await Car.find(filters).sort(sort);
 
     res.status(200).json({
       success: true,
-      data: products,
+      data: cars,
     });
-  } catch (e) {
+  } catch (error) {
     console.log(error);
     res.status(500).json({
       success: false,
-      message: "Some error occured",
+      message: "Some error occurred",
     });
   }
 };
 
-const getProductDetails = async (req, res) => {
+// Get details for a specific car
+const getCarDetails = async (req, res) => {
   try {
     const { id } = req.params;
-    const product = await Product.findById(id);
+    const car = await Car.findById(id);
 
-    if (!product)
+    if (!car) {
       return res.status(404).json({
         success: false,
-        message: "Product not found!",
+        message: "Car not found!",
       });
+    }
 
     res.status(200).json({
       success: true,
-      data: product,
+      data: car,
     });
-  } catch (e) {
-    // console.log(error);
+  } catch (error) {
+    console.log(error);
     res.status(500).json({
       success: false,
-      message: "Some error occured",
+      message: "Some error occurred",
     });
   }
 };
 
-module.exports = { getFilteredProducts, getProductDetails };
+module.exports = { getFilteredCars, getCarDetails };

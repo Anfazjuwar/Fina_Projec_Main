@@ -112,7 +112,7 @@ export const shoppingViewMainHeaderMenuItems = [
   {
     id: "homemain",
     label: "Homemain",
-    path: "/main/home",
+    path: "/",
   },
   {
     id: "about",
@@ -183,7 +183,34 @@ export const shoppingViewHeaderMenuItems = [
     path: "/shop/search",
   },
 ];
+export const shoppingCarsViewHeaderMenuItems = [
+  {
+    id: "home",
+    label: "Home",
+    path: "/cars/home",
+  },
+  {
+    id: "listing",
+    label: "Listing",
+    path: "/Cars/listing",
+  },
+  {
+    id: "Sell",
+    label: "Sell Your Car",
+    path: "/car/seell",
+  },
+  {
+    id: "AboutCar",
+    label: "Why Buy From Us",
+    path: "/car/listing",
+  },
 
+  {
+    id: "search",
+    label: "Search",
+    path: "/car/search",
+  },
+];
 export const categoryOptionsMap = {
   cartparts: "Cartparts",
   batteries: "Batteries",
@@ -206,6 +233,35 @@ export const brandOptionsMap = {
   volkswagen: "Volkswagen",
   porsche: "Porsche",
   opel: "Opel",
+};
+
+export const filterCarsOptions = {
+  category: [
+    { id: "sedan", label: "Sedan" },
+    { id: "suv", label: "SUV" },
+    { id: "hatchback", label: "Hatchback" },
+    { id: "truck", label: "Truck" },
+    { id: "van", label: "Van" },
+    { id: "coupe", label: "Coupe" },
+    { id: "convertible", label: "Convertible" },
+    { id: "wagon", label: "Wagon" },
+    { id: "others", label: "Others" },
+  ],
+  brand: [
+    { id: "toyota", label: "Toyota" },
+    { id: "honda", label: "Honda" },
+    { id: "nissan", label: "Nissan" },
+    { id: "mazda", label: "Mazda" },
+    { id: "subaru", label: "Subaru" },
+    { id: "mitsubishi", label: "Mitsubishi" },
+    { id: "suzuki", label: "Suzuki" },
+    { id: "bmw", label: "BMW" },
+    { id: "mercedes", label: "Mercedes-Benz" },
+    { id: "audi", label: "Audi" },
+    { id: "volkswagen", label: "Volkswagen" },
+    { id: "porsche", label: "Porsche" },
+    { id: "opel", label: "Opel" },
+  ],
 };
 
 export const filterOptions = {

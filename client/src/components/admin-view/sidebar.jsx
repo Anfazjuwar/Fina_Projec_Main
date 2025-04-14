@@ -26,13 +26,19 @@ const adminSidebarMenuItems = [
     id: "orders",
     label: "Orders",
     path: "/admin/orders",
-    icon: <BadgeCheck />,
+    icon: <ShoppingBasket />,
   },
   {
     id: "admincars",
-    label: "adminCars",
+    label: "AdminCars",
     path: "/admin/admincars",
     icon: <ShoppingBag />,
+  },
+  {
+    id: "admincars",
+    label: "CarsOrders",
+    path: "/admin/carsOrders",
+    icon: <BadgeCheck />,
   },
 ];
 

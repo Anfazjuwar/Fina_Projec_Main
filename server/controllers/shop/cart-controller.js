@@ -53,7 +53,7 @@ const addToCart = async (req, res) => {
 
 const fetchCartItems = async (req, res) => {
   try {
-    const userId = req.user?.id;
+    const userId = req.params.userId;
 
     if (!userId) {
       return res.status(400).json({
