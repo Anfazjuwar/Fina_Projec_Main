@@ -13,6 +13,7 @@ import commonFeatureSlice from "./common-slice";
 import adminCarsSlice from "./admin/carProSilce";
 import shopCarsReducer from "./Cars/cars-slice";
 import carCartSlice from "./Cars/cart-slice";
+import CarsSellSlice from "./Cars/car-sell";
 import carOrderSlice from "./Cars/order-silce/order";
 
 const store = configureStore({
@@ -34,6 +35,7 @@ const store = configureStore({
     carOrder: carOrderSlice,
 
     carCart: carCartSlice,
+    carSell: CarsSellSlice,
 
     commonFeature: commonFeatureSlice,
   },

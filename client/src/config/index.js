@@ -197,7 +197,7 @@ export const shoppingCarsViewHeaderMenuItems = [
   {
     id: "Sell",
     label: "Sell Your Car",
-    path: "/car/seell",
+    path: "/cars/sell",
   },
   {
     id: "AboutCar",
@@ -343,6 +343,210 @@ export const addCarFormElements = [
     componentType: "input",
     type: "text",
     placeholder: "Enter car title",
+  },
+
+  {
+    label: "Description",
+    name: "description",
+    componentType: "textarea",
+    placeholder: "Enter car description",
+  },
+  {
+    label: "Category",
+    name: "category",
+    componentType: "select",
+    options: [
+      { id: "sedan", label: "Sedan" },
+      { id: "suv", label: "SUV" },
+      { id: "hatchback", label: "Hatchback" },
+      { id: "truck", label: "Truck" },
+      { id: "van", label: "Van" },
+    ],
+  },
+  {
+    label: "Brand",
+    name: "brand",
+    componentType: "select",
+    options: [
+      { id: "toyota", label: "Toyota" },
+      { id: "honda", label: "Honda" },
+      { id: "nissan", label: "Nissan" },
+      { id: "mazda", label: "Mazda" },
+      { id: "subaru", label: "Subaru" },
+      { id: "bmw", label: "BMW" },
+      { id: "mercedes", label: "Mercedes-Benz" },
+      { id: "audi", label: "Audi" },
+    ],
+  },
+  {
+    label: "Price",
+    name: "price",
+    componentType: "input",
+    type: "number",
+    placeholder: "Enter car price",
+  },
+  {
+    label: "Sale Price",
+    name: "salePrice",
+    componentType: "input",
+    type: "number",
+    placeholder: "Enter sale price (optional)",
+  },
+  {
+    label: "Total Stock",
+    name: "totalStock",
+    componentType: "input",
+    type: "number",
+    placeholder: "Enter total stock",
+  },
+  {
+    label: "Year",
+    name: "year",
+    componentType: "input",
+    type: "number",
+    placeholder: "Enter manufacturing year",
+  },
+  {
+    label: "Fuel Type",
+    name: "fuelType",
+    componentType: "select",
+    options: [
+      { id: "petrol", label: "Petrol" },
+      { id: "diesel", label: "Diesel" },
+      { id: "electric", label: "Electric" },
+      { id: "hybrid", label: "Hybrid" },
+    ],
+  },
+  {
+    label: "Transmission",
+    name: "transmission",
+    componentType: "select",
+    options: [
+      { id: "automatic", label: "Automatic" },
+      { id: "manual", label: "Manual" },
+    ],
+  },
+  {
+    label: "Mileage (km/l)",
+    name: "mileage",
+    componentType: "input",
+    type: "number",
+    placeholder: "Enter mileage",
+  },
+  {
+    label: "Color",
+    name: "color",
+    componentType: "input",
+    type: "text",
+    placeholder: "Enter car color",
+  },
+  {
+    label: "Engine Capacity (cc)",
+    name: "engineCapacity",
+    componentType: "input",
+    type: "number",
+    placeholder: "Enter engine capacity",
+  },
+  {
+    label: "Horsepower",
+    name: "horsepower",
+    componentType: "input",
+    type: "number",
+    placeholder: "Enter horsepower",
+  },
+  {
+    label: "Seating Capacity",
+    name: "seatingCapacity",
+    componentType: "input",
+    type: "number",
+    placeholder: "Enter seating capacity",
+  },
+  {
+    label: "Safety Rating",
+    name: "safetyRating",
+    componentType: "input",
+    type: "number",
+    placeholder: "Enter safety rating (0-5)",
+  },
+
+  // Key Features (Boolean Checkboxes)
+  {
+    label: "Air Conditioning",
+    name: "airConditioning",
+    componentType: "checkbox",
+  },
+  {
+    label: "Power Steering",
+    name: "powerSteering",
+    componentType: "checkbox",
+  },
+  {
+    label: "Airbags",
+    name: "airbags",
+    componentType: "input",
+    type: "number",
+    placeholder: "Enter number of airbags",
+  },
+  {
+    label: "Rear Camera",
+    name: "rearCamera",
+    componentType: "checkbox",
+  },
+  {
+    label: "Parking Sensors",
+    name: "parkingSensors",
+    componentType: "checkbox",
+  },
+  {
+    label: "Sunroof",
+    name: "sunroof",
+    componentType: "checkbox",
+  },
+  {
+    label: "Bluetooth",
+    name: "bluetooth",
+    componentType: "checkbox",
+  },
+  {
+    label: "Alloy Wheels",
+    name: "alloyWheels",
+    componentType: "checkbox",
+  },
+
+  // Flags (Optional)
+  {
+    label: "Featured",
+    name: "isFeatured",
+    componentType: "checkbox",
+  },
+  {
+    label: "Available",
+    name: "isAvailable",
+    componentType: "checkbox",
+  },
+];
+
+export const addCarSellFormElements = [
+  {
+    label: "Title",
+    name: "title",
+    componentType: "input",
+    type: "text",
+    placeholder: "Enter car title",
+  },
+  {
+    label: "email",
+    name: "email",
+    componentType: "input",
+    type: "email",
+    placeholder: "Enter phone number",
+  },
+  {
+    label: "Phone Number",
+    name: "phone",
+    componentType: "input",
+    type: "phone",
+    placeholder: "Enter phone number",
   },
   {
     label: "Description",

@@ -1,20 +1,11 @@
-import { StarIcon } from "lucide-react";
-import { Button } from "../ui/button";
-import { Dialog, DialogContent } from "../ui/dialog";
-import { Separator } from "../ui/separator";
-import { useDispatch, useSelector } from "react-redux";
-import { useToast } from "../ui/use-toast";
-import { useEffect, useState } from "react";
+import { Dialog, DialogContent } from "../../ui/dialog";
+import { Separator } from "../../ui/separator";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
-import { addToCarCart, fetchCarCartItems } from "@/store/Cars/cart-slice";
-import { setCarDetails } from "@/store/Cars/cars-slice";
+import { useEffect, useState } from "react";
 
-function CarProductDetailsDialog({ open, setOpen, carDetails }) {
+function CarSellDetailsDialog({ open, setOpen, carDetails }) {
   const [selectedImage, setSelectedImage] = useState(null);
-  const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
-  const { toast } = useToast();
 
   useEffect(() => {
     if (carDetails?.image) {
@@ -24,20 +15,8 @@ function CarProductDetailsDialog({ open, setOpen, carDetails }) {
     }
   }, [carDetails]);
 
-  const handleAddToCart = () => {
-    dispatch(
-      addToCarCart({ userId: user?.id, carId: carDetails._id, quantity: 1 })
-    ).then((data) => {
-      if (data.payload?.success) {
-        dispatch(fetchCarCartItems(user?.id));
-        toast({ title: "Car added to cart!" });
-      }
-    });
-  };
-
   const handleDialogClose = () => {
     setOpen(false);
-    dispatch(setCarDetails(null));
   };
 
   const specs = [
@@ -64,8 +43,6 @@ function CarProductDetailsDialog({ open, setOpen, carDetails }) {
     { label: "Featured", value: carDetails?.isFeatured },
     { label: "Available", value: carDetails?.isAvailable },
   ];
-
-  console.log("carDetails", carDetails);
 
   return (
     <Dialog open={open} onOpenChange={handleDialogClose}>
@@ -99,26 +76,28 @@ function CarProductDetailsDialog({ open, setOpen, carDetails }) {
           </div>
         </div>
 
-        {/* RIGHT: Details */}
+        {/* RIGHT: Car Info */}
         <div>
           <h1 className="mb-1 text-3xl font-extrabold">{carDetails?.title}</h1>
           <p className="mb-4 text-muted-foreground">
             {carDetails?.description}
           </p>
+
           {carDetails?.phone && (
-            <p className="mb-4 text-sm text-muted-foreground">
-              Contact: {carDetails?.phone}
+            <p className="mb-2 text-sm text-muted-foreground">
+              📞 Phone: <strong>{carDetails?.phone}</strong>
             </p>
           )}
           {carDetails?.email && (
             <p className="mb-4 text-sm text-muted-foreground">
-              Email: {carDetails?.email}
+              📧 Email: <strong>{carDetails?.email}</strong>
             </p>
           )}
-          :null
+
           <p className="mb-4 text-2xl font-bold text-primary">
             ${carDetails?.price}
           </p>
+
           <div className="grid grid-cols-2 gap-2 mb-6">
             {specs.map(
               (item, i) =>
@@ -132,8 +111,10 @@ function CarProductDetailsDialog({ open, setOpen, carDetails }) {
                 )
             )}
           </div>
+
           <Separator className="my-4" />
-          <div className="grid grid-cols-2 gap-2 mb-6">
+
+          <div className="grid grid-cols-2 gap-2">
             {features.map((item, i) => (
               <div
                 key={i}
@@ -152,21 +133,10 @@ function CarProductDetailsDialog({ open, setOpen, carDetails }) {
               </div>
             ))}
           </div>
-          <div className="mt-5 mb-5">
-            {carDetails?.totalStock === 0 ? (
-              <Button className="w-full cursor-not-allowed opacity-60" disabled>
-                Out of Stock
-              </Button>
-            ) : (
-              <Button className="w-full" onClick={handleAddToCart}>
-                Add to Cart
-              </Button>
-            )}
-          </div>
         </div>
       </DialogContent>
     </Dialog>
   );
 }
 
-export default CarProductDetailsDialog;
+export default CarSellDetailsDialog;

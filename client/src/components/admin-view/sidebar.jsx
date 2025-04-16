@@ -1,5 +1,9 @@
 import {
   BadgeCheck,
+  Car,
+  Caravan,
+  CarFront,
+  CarIcon,
   ChartNoAxesCombined,
   LayoutDashboard,
   ShoppingBag,
@@ -32,13 +36,19 @@ const adminSidebarMenuItems = [
     id: "admincars",
     label: "AdminCars",
     path: "/admin/admincars",
-    icon: <ShoppingBag />,
+    icon: <Caravan />,
   },
   {
     id: "admincars",
     label: "CarsOrders",
     path: "/admin/carsOrders",
-    icon: <BadgeCheck />,
+    icon: <CarFront />,
+  },
+  {
+    id: "admincars",
+    label: "CarsRecived",
+    path: "/admin/carsrecived",
+    icon: <Car />,
   },
 ];
 

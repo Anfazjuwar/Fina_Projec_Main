@@ -1,5 +1,5 @@
 const { imageUploadUtil } = require("../../helpers/cloudinary");
-const Car = require("../../models/Cars");
+const CarSell = require("../../models/Car-sell");
 
 // Upload single image
 const handleImageUpload = async (req, res) => {
@@ -16,7 +16,7 @@ const handleImageUpload = async (req, res) => {
 };
 
 // Add new car
-const addCar = async (req, res) => {
+const addCarSell = async (req, res) => {
   try {
     const {
       image,
@@ -48,9 +48,11 @@ const addCar = async (req, res) => {
       isAvailable,
       averageReview,
       name,
+      phone,
+      email,
     } = req.body;
 
-    const newCar = new Car({
+    const newCar = new CarSell({
       image,
       title,
       description,
@@ -80,6 +82,8 @@ const addCar = async (req, res) => {
       isAvailable,
       averageReview,
       name,
+      phone,
+      email,
     });
 
     await newCar.save();
@@ -91,9 +95,9 @@ const addCar = async (req, res) => {
 };
 
 // Get all cars
-const fetchAllCars = async (req, res) => {
+const fetchAllCarsSell = async (req, res) => {
   try {
-    const cars = await Car.find();
+    const cars = await CarSell.find();
     res.status(200).json({ success: true, data: cars });
   } catch (error) {
     console.error(error);
@@ -102,49 +106,49 @@ const fetchAllCars = async (req, res) => {
 };
 
 // Edit a car
-const editCar = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const {
-      image,
-      title,
-      description,
-      category,
-      brand,
-      price,
-      salePrice,
-      totalStock,
-      averageReview,
-    } = req.body;
+// const editCar = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const {
+//       image,
+//       title,
+//       description,
+//       category,
+//       brand,
+//       price,
+//       salePrice,
+//       totalStock,
+//       averageReview,
+//     } = req.body;
 
-    const car = await Car.findById(id);
-    if (!car) {
-      return res.status(404).json({ success: false, message: "Car not found" });
-    }
+//     const car = await CarSell.findById(id);
+//     if (!car) {
+//       return res.status(404).json({ success: false, message: "Car not found" });
+//     }
 
-    car.title = title ?? car.title;
-    car.description = description ?? car.description;
-    car.category = category ?? car.category;
-    car.brand = brand ?? car.brand;
-    car.price = price !== "" ? price : car.price;
-    car.salePrice = salePrice !== "" ? salePrice : car.salePrice;
-    car.totalStock = totalStock ?? car.totalStock;
-    car.image = image ?? car.image;
-    car.averageReview = averageReview ?? car.averageReview;
+//     car.title = title ?? car.title;
+//     car.description = description ?? car.description;
+//     car.category = category ?? car.category;
+//     car.brand = brand ?? car.brand;
+//     car.price = price !== "" ? price : car.price;
+//     car.salePrice = salePrice !== "" ? salePrice : car.salePrice;
+//     car.totalStock = totalStock ?? car.totalStock;
+//     car.image = image ?? car.image;
+//     car.averageReview = averageReview ?? car.averageReview;
 
-    await car.save();
-    res.status(200).json({ success: true, data: car });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Error occurred" });
-  }
-};
+//     await car.save();
+//     res.status(200).json({ success: true, data: car });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ success: false, message: "Error occurred" });
+//   }
+// };
 
 // Delete a car
-const deleteCar = async (req, res) => {
+const deleteSellCar = async (req, res) => {
   try {
     const { id } = req.params;
-    const car = await Car.findByIdAndDelete(id);
+    const car = await CarSell.findByIdAndDelete(id);
 
     if (!car) {
       return res.status(404).json({ success: false, message: "Car not found" });
@@ -161,8 +165,8 @@ const deleteCar = async (req, res) => {
 
 module.exports = {
   handleImageUpload,
-  addCar,
-  fetchAllCars,
-  editCar,
-  deleteCar,
+  addCarSell,
+  fetchAllCarsSell,
+  //   editCar,
+  deleteSellCar,
 };

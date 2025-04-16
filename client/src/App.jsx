@@ -36,6 +36,9 @@ import ShoppingCarListing from "./pages/cars-view/listingcars";
 import CarCheckout from "./pages/cars-view/CheckOut";
 import AdminCarOrdersView from "./components/admin-view/Cars/car-order";
 import AdminCarOrders from "./pages/admin-view/carOrder";
+import CarSell from "./pages/cars-view/carSell";
+import CarSellAdmin from "./components/admin-view/Cars/careSellView";
+import ChatbotDialog from "./pages/chatBot/chatbot";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -57,135 +60,142 @@ function App() {
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
-      <Routes>
-        {/* <Route path="/main" element={<MainlayOut />}>
+      <div className="flex flex-col overflow-hidden bg-white">
+        {/* Your existing content */}
+        <ChatbotDialog />
+
+        <Routes>
+          {/* <Route path="/main" element={<MainlayOut />}>
           <Route path="home" element={<ShoppingMainHome />} />
         </Route> */}
-        {/* Auth (no MainLayout) */}
-        <Route path="/auth" element={<AuthLayout />}>
-          <Route
-            path="login"
-            element={
-              isAuthenticated ? (
-                user?.role === "admin" ? (
-                  <Navigate to="/admin/dashboard" />
-                ) : (
-                  <Navigate to="/main/home" />
-                )
-              ) : (
-                <AuthLogin />
-              )
-            }
-          />
-          <Route
-            path="register"
-            element={
-              isAuthenticated ? (
-                user?.role === "admin" ? (
-                  <Navigate to="/admin/dashboard" />
-                ) : (
-                  <Navigate to="/main/home" />
-                )
-              ) : (
-                <AuthRegister />
-              )
-            }
-          />
-        </Route>
-        {/* Admin Routes */}
-        {/* Admin Protected */}
-        <Route
-          path="/admin"
-          element={
-            !isAuthenticated || user?.role !== "admin" ? (
-              <Navigate to="/unauth-page" />
-            ) : (
-              <AdminLayout />
-            )
-          }
-        >
-          <Route path="admincars" element={<Admincars />} />
-          <Route path="dashboard" element={<AdminDashboard />} />
-          <Route path="products" element={<AdminProducts />} />
-          <Route path="orders" element={<AdminOrders />} />
-          <Route path="carsOrders" element={<AdminCarOrders />} />
-          <Route path="features" element={<AdminFeatures />} />
-        </Route>
-
-        {/* Everything else with MainlayOut */}
-        {/* Main Layout for Users */}
-        <Route path="/" element={<MainlayOut />}>
-          <Route
-            path="account"
-            element={
-              !isAuthenticated ? (
-                <Navigate to="/auth/login" />
-              ) : (
-                <ShoppingAccount />
-              )
-            }
-          />
-          {/* Home */}
-          {/* Cars */}
-          <Route path="/cars" element={<ShoppingCarLayout />}>
-            <Route path="home" element={<ShoppingCarHome />} />
-            <Route path="listing" element={<ShoppingCarListing />} />
+          {/* Auth (no MainLayout) */}
+          <Route path="/auth" element={<AuthLayout />}>
             <Route
-              path="checkout"
+              path="login"
               element={
-                !isAuthenticated ? (
-                  <Navigate to="/auth/login" />
+                isAuthenticated ? (
+                  user?.role === "admin" ? (
+                    <Navigate to="/admin/dashboard" />
+                  ) : (
+                    <Navigate to="/main/home" />
+                  )
                 ) : (
-                  <CarCheckout />
+                  <AuthLogin />
+                )
+              }
+            />
+            <Route
+              path="register"
+              element={
+                isAuthenticated ? (
+                  user?.role === "admin" ? (
+                    <Navigate to="/admin/dashboard" />
+                  ) : (
+                    <Navigate to="/main/home" />
+                  )
+                ) : (
+                  <AuthRegister />
                 )
               }
             />
           </Route>
-
-          {/* Cars */}
-
-          {/* Shop Layout */}
-          <Route path="shop" element={<ShoppingLayout />}>
-            <Route path="home" element={<ShoppingHome />} />
-            <Route path="listing" element={<ShoppingListing />} />
-            <Route path="search" element={<SearchProducts />} />
-            <Route
-              path="checkout"
-              element={
-                !isAuthenticated ? (
-                  <Navigate to="/auth/login" />
-                ) : (
-                  <ShoppingCheckout />
-                )
-              }
-            />
-
-            <Route
-              path="paypal-return"
-              element={
-                !isAuthenticated ? (
-                  <Navigate to="/auth/login" />
-                ) : (
-                  <PaypalReturnPage />
-                )
-              }
-            />
-            <Route
-              path="payment-success"
-              element={
-                !isAuthenticated ? (
-                  <Navigate to="/auth/login" />
-                ) : (
-                  <PaymentSuccessPage />
-                )
-              }
-            />
+          {/* Admin Routes */}
+          {/* Admin Protected */}
+          <Route
+            path="/admin"
+            element={
+              !isAuthenticated || user?.role !== "admin" ? (
+                <Navigate to="/unauth-page" />
+              ) : (
+                <AdminLayout />
+              )
+            }
+          >
+            <Route path="admincars" element={<Admincars />} />
+            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="products" element={<AdminProducts />} />
+            <Route path="orders" element={<AdminOrders />} />
+            <Route path="carsOrders" element={<AdminCarOrders />} />
+            <Route path="features" element={<AdminFeatures />} />
+            <Route path="carsrecived" element={<CarSellAdmin />} />
           </Route>
-        </Route>
-        {/* Other Pages */}
-        <Route path="/unauth-page" element={<UnauthPage />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+
+          {/* Everything else with MainlayOut */}
+          {/* Main Layout for Users */}
+          <Route path="/" element={<MainlayOut />}>
+            <Route
+              path="account"
+              element={
+                !isAuthenticated ? (
+                  <Navigate to="/auth/login" />
+                ) : (
+                  <ShoppingAccount />
+                )
+              }
+            />
+            {/* Home */}
+            {/* Cars */}
+            <Route path="/cars" element={<ShoppingCarLayout />}>
+              <Route path="home" element={<ShoppingCarHome />} />
+              <Route path="listing" element={<ShoppingCarListing />} />
+              <Route path="sell" element={<CarSell />} />
+              <Route
+                path="checkout"
+                element={
+                  !isAuthenticated ? (
+                    <Navigate to="/auth/login" />
+                  ) : (
+                    <CarCheckout />
+                  )
+                }
+              />
+            </Route>
+
+            {/* Cars */}
+
+            {/* Shop Layout */}
+            <Route path="shop" element={<ShoppingLayout />}>
+              <Route path="home" element={<ShoppingHome />} />
+              <Route path="listing" element={<ShoppingListing />} />
+              <Route path="search" element={<SearchProducts />} />
+              <Route
+                path="checkout"
+                element={
+                  !isAuthenticated ? (
+                    <Navigate to="/auth/login" />
+                  ) : (
+                    <ShoppingCheckout />
+                  )
+                }
+              />
+
+              <Route
+                path="paypal-return"
+                element={
+                  !isAuthenticated ? (
+                    <Navigate to="/auth/login" />
+                  ) : (
+                    <PaypalReturnPage />
+                  )
+                }
+              />
+              <Route
+                path="payment-success"
+                element={
+                  !isAuthenticated ? (
+                    <Navigate to="/auth/login" />
+                  ) : (
+                    <PaymentSuccessPage />
+                  )
+                }
+              />
+            </Route>
+          </Route>
+          {/* Other Pages */}
+          <Route path="/unauth-page" element={<UnauthPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
     </div>
   );
 }

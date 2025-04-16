@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
 
 const dbConnection = async () => {
-  mongoose
-    .connect("mongodb+srv://mohamedjuwar67:MyLife@cluster0.6tdry.mongodb.net/")
-    .then(() => console.log("Connected"))
-    .catch((error) => console.log(error));
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("Connected");
+  } catch (error) {
+    console.error("Connection error:", error);
+  }
 };
 
 module.exports = dbConnection;
