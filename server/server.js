@@ -33,8 +33,6 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 dbConnection();
-console.log("✅ MONGO_URI:", process.env.MONGO_URI);
-console.log("✅ OPENAI_API_KEY:", process.env.OPENAI_API_KEY);
 
 app.use(
   cors({

@@ -1,8 +1,9 @@
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Bot, X } from "lucide-react";
+import { Bot } from "lucide-react";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useSelector } from "react-redux";
 
 function ChatbotDialog() {
   const [open, setOpen] = useState(false);
@@ -10,14 +11,14 @@ function ChatbotDialog() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // ✅ This is valid usage — outside of functions
+  const { user } = useSelector((state) => state.auth);
+
   const sendMessage = async () => {
-    const { user, isAuthenticated, isLoading } = useSelector(
-      (state) => state.auth
-    );
     if (!input.trim()) return;
 
     const userMessage = { role: "user", content: input };
-    setMessages([...messages, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setLoading(true);
 
@@ -25,12 +26,13 @@ function ChatbotDialog() {
       const res = await fetch("http://localhost:5000/api/ai/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: input }),
+        body: JSON.stringify({ message: input, user: user?.userName }),
       });
+
       const data = await res.json();
+
       setMessages((prev) => [
         ...prev,
-        userMessage,
         { role: "assistant", content: data.reply },
       ]);
     } catch (err) {
@@ -56,9 +58,6 @@ function ChatbotDialog() {
       <DialogContent className="max-w-lg w-full h-[600px] flex flex-col p-4 rounded-xl">
         <div className="flex items-center justify-between mb-2">
           <h2 className="text-lg font-semibold">Car Assistant Chat</h2>
-          <button onClick={() => setOpen(false)}>
-            {/* <X className="w-5 h-5" /> */}
-          </button>
         </div>
 
         <div className="flex-1 p-3 mb-3 space-y-2 overflow-y-auto text-sm rounded bg-muted">
@@ -71,7 +70,7 @@ function ChatbotDialog() {
                   : "bg-gray-100 self-start"
               }`}
             >
-              <strong>{msg.role === "user" ? "you" : "Nj Comapany"}: </strong>
+              <strong>{msg.role === "user" ? "You" : "NJ AI"}: </strong>
               {msg.content}
             </div>
           ))}
@@ -80,7 +79,7 @@ function ChatbotDialog() {
 
         <div className="flex gap-2">
           <Input
-            placeholder="Ask about German or Japanese cars..."
+            placeholder="Ask something..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && sendMessage()}
