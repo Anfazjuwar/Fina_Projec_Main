@@ -120,14 +120,9 @@ export const shoppingViewMainHeaderMenuItems = [
     path: "/main/about",
   },
   {
-    id: "faq",
-    label: "Your Questions",
-    path: "/main/faq",
-  },
-  {
     id: "sell",
     label: "Sell Your Car With Us",
-    path: "/main/sell-car",
+    path: "/cars/sell",
   },
   {
     id: "carparts",
@@ -138,6 +133,16 @@ export const shoppingViewMainHeaderMenuItems = [
     id: "cars",
     label: "Cars",
     path: "/cars/home",
+  },
+  {
+    id: "LiveChat",
+    label: "LiveChat with Us and Car Experts",
+    path: "/chat",
+  },
+  {
+    id: "contact",
+    label: "Contact Us",
+    path: "/contact",
   },
 ];
 

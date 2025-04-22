@@ -4,6 +4,7 @@ import axios from "axios";
 const initialState = {
   isLoading: false,
   carSellList: [],
+  carDetails: null,
 };
 
 // Add New Car

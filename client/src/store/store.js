@@ -15,6 +15,7 @@ import shopCarsReducer from "./Cars/cars-slice";
 import carCartSlice from "./Cars/cart-slice";
 import CarsSellSlice from "./Cars/car-sell";
 import carOrderSlice from "./Cars/order-silce/order";
+import chatReducer from "./Chat/chat";
 
 const store = configureStore({
   reducer: {
@@ -36,6 +37,7 @@ const store = configureStore({
 
     carCart: carCartSlice,
     carSell: CarsSellSlice,
+    chat: chatReducer,
 
     commonFeature: commonFeatureSlice,
   },

@@ -35,6 +35,10 @@ import {
   Puzzle,
   Boxes,
 } from "lucide-react";
+import CarTile from "../CarsShopping/car-title";
+import { addToCarCart, fetchCarCartItems } from "@/store/Cars/cart-slice";
+import { fetchAllFilteredCars, fetchCarDetails } from "@/store/Cars/cars-slice";
+import CarProductDetailsDialog from "../CarsShopping/car-details";
 
 export const categoriesWithIcon = [
   { id: "cartparts", label: "Cartparts", icon: Puzzle },
@@ -75,6 +79,7 @@ function ShoppingMainHome() {
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
 
   const { user } = useSelector((state) => state.auth);
+  const { carList, carDetails } = useSelector((state) => state.shopCars);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -111,6 +116,48 @@ function ShoppingMainHome() {
     });
   }
 
+  function handleGetCarDetails(getCurrentCarId) {
+    dispatch(fetchCarDetails(getCurrentCarId));
+  }
+
+  function handleAddToCarCart(getCurrentCarId, getTotalStock) {
+    dispatch(
+      addToCarCart({
+        userId: user?.id,
+        carId: getCurrentCarId,
+        quantity: 1,
+      })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(fetchCarCartItems(user?.id));
+        toast({ title: "Car is added to cart" });
+      }
+    });
+  }
+
+  useEffect(() => {
+    dispatch(
+      fetchAllFilteredCars({
+        filterParams: {},
+        sortParams: "price-lowtohigh",
+      })
+    );
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getFeatureImages());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % featureImageList.length);
+    }, 15000);
+    return () => clearInterval(timer);
+  }, [featureImageList]);
+
+  useEffect(() => {
+    if (carDetails !== null) setOpenDetailsDialog(true);
+  }, [carDetails]);
   useEffect(() => {
     if (productDetails !== null) setOpenDetailsDialog(true);
   }, [productDetails]);
@@ -220,6 +267,20 @@ function ShoppingMainHome() {
           </div>
         </div>
       </section>
+      <section className="py-12">
+        <div className="container px-4 mx-auto">
+          <h2 className="mb-8 text-3xl font-bold text-center">Featured Cars</h2>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {carList?.slice(0, 6).map((carItem) => (
+              <CarTile
+                car={carItem}
+                handleGetProductDetails={handleGetCarDetails}
+                handleAddtoCart={handleAddToCarCart}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
 
       <section className="py-12">
         <div className="container px-4 mx-auto">
@@ -228,21 +289,29 @@ function ShoppingMainHome() {
           </h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {productList && productList.length > 0
-              ? productList.map((productItem) => (
-                  <ShoppingProductTile
-                    handleGetProductDetails={handleGetProductDetails}
-                    product={productItem}
-                    handleAddtoCart={handleAddtoCart}
-                  />
-                ))
+              ? productList
+                  ?.slice(0, 6)
+                  .map((productItem) => (
+                    <ShoppingProductTile
+                      handleGetProductDetails={handleGetProductDetails}
+                      product={productItem}
+                      handleAddtoCart={handleAddtoCart}
+                    />
+                  ))
               : null}
           </div>
         </div>
       </section>
+
       <ProductDetailsDialog
         open={openDetailsDialog}
         setOpen={setOpenDetailsDialog}
         productDetails={productDetails}
+      />
+      <CarProductDetailsDialog
+        open={openDetailsDialog}
+        setOpen={setOpenDetailsDialog}
+        carDetails={carDetails}
       />
     </div>
   );

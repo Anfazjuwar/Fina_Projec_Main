@@ -39,6 +39,8 @@ import AdminCarOrders from "./pages/admin-view/carOrder";
 import CarSell from "./pages/cars-view/carSell";
 import CarSellAdmin from "./components/admin-view/Cars/careSellView";
 import ChatbotDialog from "./pages/chatBot/chatbot";
+import Chatpage from "./pages/Chat/ChatPage";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -55,14 +57,14 @@ function App() {
   const redirectFromRoot = () => {
     if (!isAuthenticated) return <Navigate to="/auth/login" />;
     if (user?.role === "admin") return <Navigate to="/admin/dashboard" />;
-    return <Navigate to="/main/home" />;
+    return <Navigate to="/" />;
   };
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
       <div className="flex flex-col overflow-hidden bg-white">
         {/* Your existing content */}
-        <ChatbotDialog />
+        {isAuthenticated && user?.role === "admin" ? "" : <ChatbotDialog />}
 
         <Routes>
           {/* <Route path="/main" element={<MainlayOut />}>
@@ -77,7 +79,7 @@ function App() {
                   user?.role === "admin" ? (
                     <Navigate to="/admin/dashboard" />
                   ) : (
-                    <Navigate to="/main/home" />
+                    <Navigate to="/" />
                   )
                 ) : (
                   <AuthLogin />
@@ -91,7 +93,7 @@ function App() {
                   user?.role === "admin" ? (
                     <Navigate to="/admin/dashboard" />
                   ) : (
-                    <Navigate to="/main/home" />
+                    <Navigate to="/" />
                   )
                 ) : (
                   <AuthRegister />
@@ -111,6 +113,7 @@ function App() {
               )
             }
           >
+            <Route path="chat" element={<Chatpage />} />
             <Route path="admincars" element={<Admincars />} />
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="products" element={<AdminProducts />} />
@@ -123,6 +126,14 @@ function App() {
           {/* Everything else with MainlayOut */}
           {/* Main Layout for Users */}
           <Route path="/" element={<MainlayOut />}>
+            <Route path="" element={<ShoppingMainHome />} />
+            <Route
+              path="chat"
+              element={
+                !isAuthenticated ? <Navigate to="/auth/login" /> : <Chatpage />
+              }
+            />
+
             <Route
               path="account"
               element={
@@ -196,6 +207,9 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
+      {/* Footer */}
+      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }

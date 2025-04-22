@@ -19,6 +19,7 @@ import {
 import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CarSellDetailsDialog from "./carselldialog";
+import AdminCarSellTile from "./carsellShow";
 
 const initialFormData = {
   image: [],
@@ -117,14 +118,14 @@ function CarSellAdmin() {
         {carSellList &&
           carSellList.length > 0 &&
           carSellList.map((carItem) => (
-            <AdminCarTile
+            <AdminCarSellTile
               key={carItem._id}
               car={carItem}
               handleDelete={handleDelete}
             />
           ))}
       </div>
-      <div className="grid gap-4 mb-10 ml-8 md:grid-cols-3 lg:grid-cols-4 ">
+      {/* <div className="grid gap-4 mb-10 ml-8 md:grid-cols-3 lg:grid-cols-4 ">
         {carSellList &&
           carSellList.length > 0 &&
           carSellList.map((carItem) => (
@@ -134,7 +135,7 @@ function CarSellAdmin() {
               handleDelete={handleDelete}
             />
           ))}
-      </div>
+      </div> */}
       {/* <Sheet
         open={openCreateDialog}
         onOpenChange={() => {

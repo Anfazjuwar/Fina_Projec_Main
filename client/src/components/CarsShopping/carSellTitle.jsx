@@ -56,7 +56,7 @@ function CarTile({ car, handleGetProductDetails, handleAddtoCart }) {
       <CardFooter>
         {car?.totalStock === 0 ? (
           <Button className="w-full cursor-not-allowed opacity-60">
-            Out Of Stock
+            Out Of Stock bokka
           </Button>
         ) : (
           <Button

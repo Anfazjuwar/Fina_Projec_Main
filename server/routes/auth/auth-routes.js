@@ -4,13 +4,18 @@ const {
   loginUser,
   logoutUser,
   authMiddleware,
+  allUsers,
+  allUsersClient,
 } = require("../../controllers/auth/auth-controller");
+const { protect } = require("../../middleware/authMiddleware");
 
 const router = express.Router();
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.post("/logout", logoutUser);
+router.get("/", protect, allUsers);
+router.route("/search").get(protect, allUsersClient);
 router.get("/check-auth", authMiddleware, (req, res) => {
   const user = req.user;
   res.status(200).json({

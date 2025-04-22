@@ -1,13 +1,14 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
+const asyncHandler = require("express-async-handler");
 
 //register
 const registerUser = async (req, res) => {
   const { userName, email, password } = req.body;
 
   try {
-    const checkUser = await User.findOne({ email });
+    const checkUser = await User.findOne({ email, userName });
     if (checkUser)
       return res.json({
         success: false,
@@ -71,6 +72,7 @@ const loginUser = async (req, res) => {
     res.cookie("token", token, { httpOnly: true, secure: false }).json({
       success: true,
       message: "Logged in successfully",
+      token, // <--- ADD THIS
       user: {
         email: checkUser.email,
         role: checkUser.role,
@@ -116,5 +118,56 @@ const authMiddleware = async (req, res, next) => {
     });
   }
 };
+const allUsers = asyncHandler(async (req, res) => {
+  const keyword = req.query.search
+    ? {
+        $or: [
+          { userName: { $regex: req.query.search, $options: "i" } },
+          { email: { $regex: req.query.search, $options: "i" } },
+        ],
+      }
+    : {};
 
-module.exports = { registerUser, loginUser, logoutUser, authMiddleware };
+  const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
+
+  res.send(users);
+  console.log("🔍 GET /api/auth/user", req.query.search);
+});
+
+const allUsersClient = asyncHandler(async (req, res) => {
+  const keyword = req.query.search
+    ? {
+        $and: [
+          {
+            $or: [
+              { userName: { $regex: req.query.search, $options: "i" } },
+              { email: { $regex: req.query.search, $options: "i" } },
+            ],
+          },
+          { role: "admin" },
+        ],
+      }
+    : { role: "admin" };
+
+  const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
+
+  console.log("🔍 GET /api/auth/user", req.query.search);
+  res.send(users);
+});
+
+//regex means regular expression that is used to search for a string in a string
+// $or means either of the two conditions should be true
+// $regex means regular expression that is used to search for a string in a string
+// $options means options for the regular expression
+// $ne means not equal to
+// $and means both conditions should be true
+// $or means either of the two conditions should be true
+// $in means in the array
+module.exports = {
+  allUsers,
+  registerUser,
+  loginUser,
+  logoutUser,
+  authMiddleware,
+  allUsersClient,
+};

@@ -10,8 +10,8 @@ import { Link, useNavigate } from "react-router-dom";
 import CommonForm from "@/components/common/form";
 import { registerFormControls } from "@/config";
 import { useDispatch } from "react-redux";
+import { useToast } from "@/components/ui/use-toast";
 
-import { toast } from "sonner";
 import { registerUser } from "@/store/auth-slice";
 
 const initialState = {
@@ -24,39 +24,24 @@ const RegisterForm = () => {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const { toast } = useToast();
+  const { toast } = useToast();
 
-  const onSubmit = (event) => {
+  function onSubmit(event) {
     event.preventDefault();
-    dispatch(registerUser(formData))
-      .then((data) => {
-        console.log("Register Response:", data); // ✅ Debugging output
-
-        if (data?.payload?.success) {
-          toast.success("Registration Successful", {
-            description:
-              data?.payload?.message ||
-              "You have been registered successfully!",
-          });
-
-          navigate("/auth/login");
-        } else {
-          toast.error("Registration Failed", {
-            description:
-              data?.payload?.message ||
-              "Already have used this email, try again.",
-            varriant: "",
-          });
-        }
-      })
-      .catch((error) => {
-        console.error("Dispatch Error:", error);
-        toast.error("Registration Error", {
-          description: "An unexpected error occurred. Please try again.",
+    dispatch(registerUser(formData)).then((data) => {
+      if (data?.payload?.success) {
+        toast({
+          title: data?.payload?.message,
         });
-      });
-  };
-
+        navigate("/auth/login");
+      } else {
+        toast({
+          title: data?.payload?.message,
+          variant: "destructive",
+        });
+      }
+    });
+  }
   console.log(formData);
   return (
     <div className="flex items-center justify-center w-full h-screen p-6 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700">

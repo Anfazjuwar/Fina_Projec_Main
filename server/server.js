@@ -3,13 +3,15 @@ const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const socketIo = require("socket.io");
+const http = require("http");
+// const server = http.createServer(app);
 
 const authRouter = require("./routes/auth/auth-routes");
 const adminProductsRouter = require("./routes/admin/products-routes");
 const adminOrderRouter = require("./routes/admin/order-routes");
 const adminOrderCarRouter = require("./routes/admin/CarOrderRoute");
-const chatRoutes = require("./routes/openAi/Ai");
-
+const messageRoutes = require("./routes/chat/messageRoutes");
 const shopProductsRouter = require("./routes/shop/products-routes");
 const shopCartRouter = require("./routes/shop/cart-routes");
 const shopAddressRouter = require("./routes/shop/address-routes");
@@ -22,17 +24,21 @@ const CarsAddressRouter = require("./routes/cars/address-routes");
 const PublicReviewRouter = require("./routes/cars/review");
 const carOrderRouter = require("./routes/cars/CarOder-routes");
 const carCartRouter = require("./routes/cars/cart-routers");
-
 const CardSellRouter = require("./routes/cars/carSell");
+const chatRoutes = require("./routes/openAi/Ai");
+const livechatRoutes = require("./routes/chat/chat");
 
 const commonFeatureRouter = require("./routes/common/feature-routes");
 const dbConnection = require("./dbConfig");
 
 dotenv.config();
-const app = express();
+
 const PORT = process.env.PORT || 5000;
 
 dbConnection();
+
+const app = express();
+app.use(cookieParser());
 
 app.use(
   cors({
@@ -94,7 +100,50 @@ app.use("/api/admin/car/orders", adminOrderCarRouter);
 // OpenAI routes
 
 app.use("/api/ai", chatRoutes);
+app.use("/api/chat", livechatRoutes);
+app.use("/api/message", messageRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+// Socket.io setup
+const server = app.listen(
+  PORT,
+  console.log(`Server running on PORT ${PORT}...`)
+);
+
+const io = require("socket.io")(server, {
+  pingTimeout: 60000,
+  cors: {
+    origin: "http://localhost:5173",
+    // credentials: true,
+  },
+});
+io.on("connection", (socket) => {
+  console.log("Connected to socket.io");
+  socket.on("setup", (userData) => {
+    socket.join(userData._id);
+    socket.emit("connected");
+  });
+
+  socket.on("join chat", (room) => {
+    socket.join(room);
+    console.log("User Joined Room: " + room);
+  });
+  socket.on("typing", (room) => socket.in(room).emit("typing"));
+  socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
+
+  socket.on("new message", (newMessageRecieved) => {
+    var chat = newMessageRecieved.chat;
+
+    if (!chat.users) return console.log("chat.users not defined");
+
+    chat.users.forEach((user) => {
+      if (user._id == newMessageRecieved.sender._id) return;
+
+      socket.in(user._id).emit("message recieved", newMessageRecieved);
+    });
+  });
+
+  socket.off("setup", () => {
+    console.log("USER DISCONNECTED");
+    socket.leave(userData._id);
+  });
 });

@@ -99,12 +99,22 @@ const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        console.log(action);
-
         state.isLoading = false;
-        state.user = action.payload.success ? action.payload.user : null;
-        state.isAuthenticated = action.payload.success;
+        if (action.payload.success) {
+          state.user = action.payload.user;
+          state.isAuthenticated = true;
+
+          // Save to localStorage for chatSlice
+          localStorage.setItem(
+            "userInfo",
+            JSON.stringify({ ...action.payload.user, token: "TOKEN_STRING" }) // add token here
+          );
+        } else {
+          state.user = null;
+          state.isAuthenticated = false;
+        }
       })
+
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
         state.user = null;

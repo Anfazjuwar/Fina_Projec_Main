@@ -27,6 +27,7 @@ import { fetchAllFilteredCars, fetchCarDetails } from "@/store/Cars/cars-slice";
 import CarProductDetailsDialog from "@/components/CarsShopping/car-details";
 import CarTile from "@/components/CarsShopping/car-title";
 import { addToCarCart, fetchCarCartItems } from "@/store/Cars/cart-slice";
+import CarSellDetailsDialog from "@/components/admin-view/Cars/carselldialog";
 
 export const categoriesWithIcon = [
   { id: "sedan", label: "Sedan", icon: CarFrontIcon },
@@ -158,7 +159,6 @@ function ShoppingCarHome() {
           <ChevronRight className="w-4 h-4" />
         </Button>
       </div>
-
       <section className="py-12 bg-gray-50">
         <div className="container px-4 mx-auto">
           <h2 className="mb-8 text-3xl font-bold text-center">
@@ -182,7 +182,6 @@ function ShoppingCarHome() {
           </div>
         </div>
       </section>
-
       <section className="py-12 bg-gray-50">
         <div className="container px-4 mx-auto">
           <h2 className="mb-8 text-3xl font-bold text-center">Shop by Brand</h2>
@@ -202,7 +201,6 @@ function ShoppingCarHome() {
           </div>
         </div>
       </section>
-
       <section className="py-12">
         <div className="container px-4 mx-auto">
           <h2 className="mb-8 text-3xl font-bold text-center">Featured Cars</h2>
@@ -218,12 +216,12 @@ function ShoppingCarHome() {
           </div>
         </div>
       </section>
-
       <CarProductDetailsDialog
         open={openDetailsDialog}
         setOpen={setOpenDetailsDialog}
         carDetails={carDetails}
       />
+      >
     </div>
   );
 }

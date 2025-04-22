@@ -50,6 +50,12 @@ const adminSidebarMenuItems = [
     path: "/admin/carsrecived",
     icon: <Car />,
   },
+  {
+    id: "Chat",
+    label: "Chat",
+    path: "/admin/chat",
+    icon: <Car />,
+  },
 ];
 
 function MenuItems({ setOpen }) {

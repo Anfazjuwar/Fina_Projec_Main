@@ -7,13 +7,13 @@ import { TbSocial } from "react-icons/tb";
 import { BsShare } from "react-icons/bs";
 import { AiOutlineInteraction } from "react-icons/ai";
 import { ImConnection } from "react-icons/im";
-import { IoCarSport } from "react-icons/io5";
+import { useToast } from "@/components/ui/use-toast";
 
 import CommonForm from "@/components/common/form";
 import { loginFormControls } from "@/config";
-// ✅ make sure this matches your file name
-import { toast } from "sonner"; // or useToast from your own hook if needed
+
 import { loginUser } from "@/store/auth-slice";
+import { IoCarSport } from "react-icons/io5";
 
 const initialState = {
   email: "",
@@ -24,32 +24,24 @@ const Login = () => {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { toast } = useToast();
 
-  const onSubmit = (event) => {
+  function onSubmit(event) {
     event.preventDefault();
 
-    dispatch(loginUser(formData))
-      .then((data) => {
-        if (data?.payload?.success) {
-          toast.success("Login Successful", {
-            description:
-              data?.payload?.message || "You have been logged in successfully!",
-          });
-        } else {
-          toast.error("Login Failed", {
-            description:
-              data?.payload?.message ||
-              "Email, password or phone number is wrong.",
-          });
-        }
-      })
-      .catch((error) => {
-        console.error("Dispatch Error:", error);
-        toast.error("Login Error", {
-          description: "An unexpected error occurred. Please try again.",
+    dispatch(loginUser(formData)).then((data) => {
+      if (data?.payload?.success) {
+        toast({
+          title: data?.payload?.message,
         });
-      });
-  };
+      } else {
+        toast({
+          title: data?.payload?.message,
+          variant: "destructive",
+        });
+      }
+    });
+  }
 
   return (
     <div className="flex items-center justify-center w-full min-h-[100vh] bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 p-6">
