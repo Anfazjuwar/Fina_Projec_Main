@@ -27,6 +27,7 @@ const carCartRouter = require("./routes/cars/cart-routers");
 const CardSellRouter = require("./routes/cars/carSell");
 const chatRoutes = require("./routes/openAi/Ai");
 const livechatRoutes = require("./routes/chat/chat");
+const carSearchRouter = require("./routes/cars/searchCar-routes");
 
 const commonFeatureRouter = require("./routes/common/feature-routes");
 const dbConnection = require("./dbConfig");
@@ -92,6 +93,7 @@ app.use("/api/car/review", PublicReviewRouter);
 app.use("/api/car/order", carOrderRouter);
 app.use("/api/car/cart", carCartRouter);
 app.use("/api/car/sell", CardSellRouter);
+app.use("/api/car/search", carSearchRouter);
 
 //cqars admin
 app.use("/api/admin/cars", carRoutes);

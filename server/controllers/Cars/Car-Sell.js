@@ -16,6 +16,83 @@ const handleImageUpload = async (req, res) => {
 };
 
 // Add new car
+// const addCarSell = async (req, res) => {
+//   try {
+//     const {
+//       image,
+//       title,
+//       description,
+//       category,
+//       brand,
+//       price,
+//       salePrice,
+//       totalStock,
+//       year,
+//       fuelType,
+//       transmission,
+//       mileage,
+//       color,
+//       engineCapacity,
+//       horsepower,
+//       seatingCapacity,
+//       safetyRating,
+//       airConditioning,
+//       powerSteering,
+//       airbags,
+//       rearCamera,
+//       parkingSensors,
+//       sunroof,
+//       bluetooth,
+//       alloyWheels,
+//       isFeatured,
+//       isAvailable,
+//       averageReview,
+//       name,
+//       phone,
+//       email,
+//     } = req.body;
+
+//     const newCar = new CarSell({
+//       image,
+//       title,
+//       description,
+//       category,
+//       brand,
+//       price,
+//       salePrice,
+//       totalStock,
+//       year,
+//       fuelType,
+//       transmission,
+//       mileage,
+//       color,
+//       engineCapacity,
+//       horsepower,
+//       seatingCapacity,
+//       safetyRating,
+//       airConditioning,
+//       powerSteering,
+//       airbags,
+//       rearCamera,
+//       parkingSensors,
+//       sunroof,
+//       bluetooth,
+//       alloyWheels,
+//       isFeatured,
+//       isAvailable,
+//       averageReview,
+//       name,
+//       phone,
+//       email,
+//     });
+
+//     await newCar.save();
+//     res.status(201).json({ success: true, data: newCar });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ success: false, message: "Error occurred" });
+//   }
+// };
 const addCarSell = async (req, res) => {
   try {
     const {
@@ -52,6 +129,8 @@ const addCarSell = async (req, res) => {
       email,
     } = req.body;
 
+    const userId = req.user._id; // ✅ set by auth middleware
+
     const newCar = new CarSell({
       image,
       title,
@@ -84,6 +163,7 @@ const addCarSell = async (req, res) => {
       name,
       phone,
       email,
+      userId, // ✅ include this
     });
 
     await newCar.save();
@@ -104,6 +184,16 @@ const fetchAllCarsSell = async (req, res) => {
     res.status(500).json({ success: false, message: "Error occurred" });
   }
 };
+// const fetchAllCarsSell = async (req, res) => {
+//   try {
+//     const userId = req.user._id; // assuming req.user is set by auth middleware
+//     const cars = await CarSell.find({ userId });
+//     res.status(200).json({ success: true, data: cars });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ success: false, message: "Error occurred" });
+//   }
+// };
 
 // Edit a car
 // const editCar = async (req, res) => {
@@ -167,6 +257,6 @@ module.exports = {
   handleImageUpload,
   addCarSell,
   fetchAllCarsSell,
-  //   editCar,
+  // fetchAllCarsSelladmin,
   deleteSellCar,
 };

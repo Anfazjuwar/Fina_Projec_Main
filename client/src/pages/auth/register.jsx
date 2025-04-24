@@ -79,12 +79,10 @@ const RegisterForm = () => {
             </div> */}
           </div>
 
-          <div className="mt-16 text-center">
-            <p className="text-base text-white">
-              Connect with friends & share for fun
-            </p>
+          <div className="mt-24 mb-4 text-center">
+            <p className="text-base text-white">You dream, we deliver.</p>
             <span className="text-sm text-white/80">
-              Share memories with friends and the world
+              Buy cars and accessories with us.
             </span>
           </div>
         </div>

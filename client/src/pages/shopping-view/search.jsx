@@ -1,5 +1,6 @@
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import ShoppingProductTile from "@/components/shopping-view/product-tile";
+// import ShoppingProductTile from "@/components/shopping-view/product-tile";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
@@ -85,9 +86,9 @@ function SearchProducts() {
   console.log(searchResults, "searchResults");
 
   return (
-    <div className="container mx-auto md:px-6 px-4 py-8">
+    <div className="container px-4 py-8 mx-auto md:px-6">
       <div className="flex justify-center mb-8">
-        <div className="w-full flex items-center">
+        <div className="flex items-center w-full">
           <Input
             value={keyword}
             name="keyword"
@@ -100,9 +101,10 @@ function SearchProducts() {
       {!searchResults.length ? (
         <h1 className="text-5xl font-extrabold">No result found!</h1>
       ) : null}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {searchResults.map((item) => (
           <ShoppingProductTile
+            key={item.id || item._id}
             handleAddtoCart={handleAddtoCart}
             product={item}
             handleGetProductDetails={handleGetProductDetails}

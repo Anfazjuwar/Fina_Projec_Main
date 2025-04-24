@@ -53,8 +53,7 @@ const initialFormData = {
   alloyWheels: false,
   isFeatured: false,
   isAvailable: true,
-  averageReview: 0,
-  Phone: "",
+  phone: "",
   email: "",
 };
 

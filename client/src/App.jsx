@@ -41,6 +41,8 @@ import CarSellAdmin from "./components/admin-view/Cars/careSellView";
 import ChatbotDialog from "./pages/chatBot/chatbot";
 import Chatpage from "./pages/Chat/ChatPage";
 import Footer from "./components/Footer/Footer";
+import TermsCondtion from "./components/terms/Terms-Condtion";
+import SearchCars from "./pages/cars-view/Searchcar";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -144,9 +146,11 @@ function App() {
                 )
               }
             />
+
             {/* Home */}
             {/* Cars */}
             <Route path="/cars" element={<ShoppingCarLayout />}>
+              <Route path="searchCars" element={<SearchCars />} />
               <Route path="home" element={<ShoppingCarHome />} />
               <Route path="listing" element={<ShoppingCarListing />} />
               <Route path="sell" element={<CarSell />} />
@@ -163,12 +167,14 @@ function App() {
             </Route>
 
             {/* Cars */}
+            <Route path="/terms" element={<TermsCondtion />} />
 
             {/* Shop Layout */}
             <Route path="shop" element={<ShoppingLayout />}>
               <Route path="home" element={<ShoppingHome />} />
               <Route path="listing" element={<ShoppingListing />} />
               <Route path="search" element={<SearchProducts />} />
+
               <Route
                 path="checkout"
                 element={

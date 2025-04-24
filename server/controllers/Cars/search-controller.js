@@ -1,6 +1,6 @@
 const Car = require("../../models/Cars");
 
-const searchProducts = async (req, res) => {
+const searchcar = async (req, res) => {
   try {
     const { keyword } = req.params;
     if (!keyword || typeof keyword !== "string") {
@@ -36,4 +36,4 @@ const searchProducts = async (req, res) => {
   }
 };
 
-module.exports = { searchProducts };
+module.exports = { searchcar };
