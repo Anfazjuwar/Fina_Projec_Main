@@ -14,7 +14,7 @@ function AdminProductTile({
       <div onClick={() => handleGetAproductdetails(product?._id)}>
         <div className="relative">
           <img
-            src={product?.image}
+            src={product?.image?.[0] || "/fallback.jpg"}
             alt={product?.title}
             className="w-full h-[300px] object-cover rounded-t-lg"
           />

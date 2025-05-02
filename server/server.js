@@ -5,9 +5,11 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const socketIo = require("socket.io");
 const http = require("http");
+
 // const server = http.createServer(app);
 
 const authRouter = require("./routes/auth/auth-routes");
+const authUser = require("./routes/admin/UserAdminRoutes");
 const adminProductsRouter = require("./routes/admin/products-routes");
 const adminOrderRouter = require("./routes/admin/order-routes");
 const adminOrderCarRouter = require("./routes/admin/CarOrderRoute");
@@ -83,6 +85,8 @@ app.use("/api/shop/address", shopAddressRouter);
 app.use("/api/shop/order", shopOrderRouter);
 app.use("/api/shop/search", shopSearchRouter);
 app.use("/api/shop/review", shopReviewRouter);
+
+app.use("/api/admin", authUser);
 
 app.use("/api/common/feature", commonFeatureRouter);
 // cars

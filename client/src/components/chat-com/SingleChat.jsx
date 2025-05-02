@@ -176,7 +176,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           <ScrollableChat messages={messages} />
         )}
       </div>
-      <div className="w-full mt-3">
+      <div className="w-[50%] mt-3 mb-24">
         <Input
           placeholder="Type a message..."
           value={newMessage}

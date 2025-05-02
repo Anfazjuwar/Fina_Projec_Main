@@ -84,6 +84,7 @@ export const addProductFormElements = [
       { id: "volkswagen", label: "Volkswagen" },
       { id: "porsche", label: "Porsche" },
       { id: "opel", label: "Opel" },
+      { id: "others", label: "Others" },
     ],
   },
   {
@@ -251,6 +252,8 @@ export const filterCarsOptions = {
     { id: "convertible", label: "Convertible" },
     { id: "wagon", label: "Wagon" },
     { id: "others", label: "Others" },
+    { id: "usedCar", label: "UsedCar" },
+    { id: "newCar", label: "NewCar" },
   ],
   brand: [
     { id: "toyota", label: "Toyota" },
@@ -266,6 +269,7 @@ export const filterCarsOptions = {
     { id: "volkswagen", label: "Volkswagen" },
     { id: "porsche", label: "Porsche" },
     { id: "opel", label: "Opel" },
+    { id: "others", label: "Others" },
   ],
 };
 
@@ -405,6 +409,24 @@ export const addCarFormElements = [
     placeholder: "Enter total stock",
   },
   {
+    label: "About Car",
+    name: "aboutCar",
+    componentType: "select",
+    options: [
+      { id: "usedCar", label: "UsedCar" },
+      { id: "newCar", label: "NewCar" },
+    ],
+  },
+  {
+    label: "Transmission",
+    name: "transmission",
+    componentType: "select",
+    options: [
+      { id: "automatic", label: "Automatic" },
+      { id: "manual", label: "Manual" },
+    ],
+  },
+  {
     label: "Year",
     name: "year",
     componentType: "input",
@@ -472,6 +494,13 @@ export const addCarFormElements = [
     componentType: "input",
     type: "number",
     placeholder: "Enter safety rating (0-5)",
+  },
+  {
+    label: "Location",
+    name: "location",
+    componentType: "input",
+    type: "text",
+    placeholder: "Enter car location",
   },
 
   // Key Features (Boolean Checkboxes)
@@ -601,7 +630,7 @@ export const addCarSellFormElements = [
     placeholder: "Enter sale price (optional)",
   },
   {
-    label: "Total Stock",
+    label: "Total Stock]",
     name: "totalStock",
     componentType: "input",
     type: "number",
@@ -675,6 +704,25 @@ export const addCarSellFormElements = [
     componentType: "input",
     type: "number",
     placeholder: "Enter safety rating (0-5)",
+  },
+  // {
+  //   label: "Used Car description",
+  //   name: "usedCar",
+  //   componentType: "textarea",
+  //   placeholder: "Enter used car description",
+  // },
+  // {
+  //   label: "New Car description",
+  //   name: "newCars",
+  //   componentType: "textarea",
+  //   placeholder: "Enter New car description",
+  // },
+  {
+    label: "Location",
+    name: "location",
+    componentType: "input",
+    type: "text",
+    placeholder: "Enter car location",
   },
 
   // Key Features (Boolean Checkboxes)

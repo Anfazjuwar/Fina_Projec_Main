@@ -9,7 +9,7 @@ function CarTile({ car, handleGetProductDetails, handleAddtoCart }) {
       <div onClick={() => handleGetProductDetails(car?._id)}>
         <div className="relative">
           <img
-            src={car?.image}
+            src={car?.image?.[0] || "/fallback.jpg"}
             alt={car?.title}
             className="w-full h-[300px] object-cover rounded-t-lg"
           />

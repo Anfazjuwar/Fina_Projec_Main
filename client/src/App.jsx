@@ -43,6 +43,7 @@ import Chatpage from "./pages/Chat/ChatPage";
 import Footer from "./components/Footer/Footer";
 import TermsCondtion from "./components/terms/Terms-Condtion";
 import SearchCars from "./pages/cars-view/Searchcar";
+import AdminUserList from "./components/usercontroller/user";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -115,6 +116,7 @@ function App() {
               )
             }
           >
+            <Route path="user" element={<AdminUserList />} />
             <Route path="chat" element={<Chatpage />} />
             <Route path="admincars" element={<Admincars />} />
             <Route path="dashboard" element={<AdminDashboard />} />

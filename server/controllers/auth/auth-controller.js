@@ -88,8 +88,56 @@ const loginUser = async (req, res) => {
     });
   }
 };
+// const loginUser = async (req, res) => {
+//   const { email, password } = req.body;
 
-//logout
+//   try {
+//     const checkUser = await User.findOne({ email });
+//     if (!checkUser)
+//       return res.json({
+//         success: false,
+//         message: "User doesn't exist! Please register.",
+//       });
+
+//     const match = await bcrypt.compare(password, checkUser.password);
+//     if (!match)
+//       return res.json({
+//         success: false,
+//         message: "Incorrect password!",
+//       });
+
+//     const token = jwt.sign(
+//       {
+//         id: checkUser._id,
+//         role: checkUser.role,
+//         email: checkUser.email,
+//         userName: checkUser.userName,
+//       },
+//       process.env.JWT_SECRET, // ✅ From .env
+//       { expiresIn: "7d" }
+//     );
+
+//     res.cookie("token", token, {
+//       httpOnly: true,
+//       sameSite: "Lax",
+//       secure: process.env.NODE_ENV === "production",
+//     });
+
+//     res.status(200).json({
+//       success: true,
+//       message: "Logged in successfully",
+//       user: {
+//         email: checkUser.email,
+//         role: checkUser.role,
+//         id: checkUser._id,
+//         userName: checkUser.userName,
+//       },
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ success: false, message: "Server error" });
+//   }
+// };
 
 const logoutUser = (req, res) => {
   res.clearCookie("token").json({

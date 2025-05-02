@@ -31,12 +31,12 @@ const ScrollableChat = ({ messages }) => {
                     <Avatar className="w-6 h-6 mt-2">
                       <AvatarImage src={m.sender.pic} alt={m.sender.name} />
                       <AvatarFallback>
-                        {m.sender.name?.[0]?.toUpperCase() || "U"}
+                        {m.sender.Username?.[0]?.toUpperCase() || "U"}
                       </AvatarFallback>
                     </Avatar>
                   </TooltipTrigger>
                   <TooltipContent className="text-xs">
-                    {m.sender.name}
+                    {m.sender.Username}
                   </TooltipContent>
                 </Tooltip>
               )}

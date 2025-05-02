@@ -9,6 +9,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { createCarOrder } from "@/store/Cars/order-silce/order";
 import Address from "@/components/shopping-view/address";
 import CarCartItemsContent from "@/components/CarsShopping/carCart-items";
+import { Link, Navigate } from "react-router-dom";
 
 function CarCheckout() {
   const { carCartItems } = useSelector((state) => state.carCart);
@@ -16,6 +17,7 @@ function CarCheckout() {
   const { approvalURL } = useSelector((state) => state.carOrder);
   const [currentSelectedAddress, setCurrentSelectedAddress] = useState(null);
   const [isPaymentStart, setIsPaymentStart] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const dispatch = useDispatch();
   const { toast } = useToast();
 
@@ -115,8 +117,32 @@ function CarCheckout() {
             </div>
           </div>
 
+          <div className="flex items-center gap-2 mt-4">
+            <input
+              type="checkbox"
+              id="terms"
+              checked={termsAccepted}
+              onChange={(e) => setTermsAccepted(e.target.checked)}
+              className="w-4 h-4"
+            />
+            <label htmlFor="terms" className="text-sm text-gray-700">
+              I agree to the{" "}
+              <Link
+                to="/terms"
+                className="text-blue-600 underline"
+                rel="noreferrer"
+              >
+                Terms & Conditions
+              </Link>
+            </label>
+          </div>
+
           <div className="w-full mt-4">
-            <Button onClick={handleInitiatePaypalPayment} className="w-full">
+            <Button
+              onClick={handleInitiatePaypalPayment}
+              className="w-full"
+              disabled={!termsAccepted} // 🔒 Disable if not checked
+            >
               {isPaymentStart
                 ? "Processing Paypal Payment..."
                 : "Checkout with Paypal"}

@@ -50,6 +50,8 @@ function CarProductDetailsDialog({ open, setOpen, carDetails }) {
     { label: "Horsepower", value: carDetails?.horsepower },
     { label: "Seating Capacity", value: carDetails?.seatingCapacity },
     { label: "Safety Rating", value: carDetails?.safetyRating },
+    { label: "Location", value: carDetails?.location },
+    { label: "About Car", value: carDetails?.aboutCar },
   ];
 
   const features = [
@@ -63,6 +65,7 @@ function CarProductDetailsDialog({ open, setOpen, carDetails }) {
     { label: "Alloy Wheels", value: carDetails?.alloyWheels },
     { label: "Featured", value: carDetails?.isFeatured },
     { label: "Available", value: carDetails?.isAvailable },
+    { label: "About Car", value: carDetails?.aboutCar },
   ];
 
   console.log("carDetails", carDetails);
@@ -115,7 +118,7 @@ function CarProductDetailsDialog({ open, setOpen, carDetails }) {
               Email: {carDetails?.email}
             </p>
           )}
-          :null
+          : GOOD CAR
           <p className="mb-4 text-2xl font-bold text-primary">
             ${carDetails?.price}
           </p>

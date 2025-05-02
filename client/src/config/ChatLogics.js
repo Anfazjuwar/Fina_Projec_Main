@@ -38,10 +38,13 @@ export const isSameUser = (messages, m, i) => {
   return i > 0 && messages[i - 1].sender._id === m.sender._id;
 };
 
-export const getSender = (loggedUser, users) => {
-  return users[0]?._id === loggedUser?._id
-    ? users[1].userName
-    : users[0].userName;
+// export const getSender = (loggedUser, user) => {
+//   return user[0]?._id === loggedUser?._id ? user[1].userName : user[0].userName;
+// };
+
+export const getSender = (user, users) => {
+  if (!user || !users || users.length < 2) return "Unknown";
+  return users[0]._id === user._id ? users[1].userName : users[0].userName;
 };
 
 export const getSenderFull = (loggedUser, users) => {

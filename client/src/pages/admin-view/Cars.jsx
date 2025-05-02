@@ -51,6 +51,8 @@ const initialFormData = {
   isFeatured: false,
   isAvailable: true,
   averageReview: 0,
+  aboutCar: "",
+  location: "",
 };
 
 function Admincars() {
@@ -83,6 +85,9 @@ function Admincars() {
             setFormData(initialFormData);
             setOpenCreateProductsDialog(false);
             setCurrentEditedId(null);
+            toast({
+              title: "Product edited successfully",
+            });
           }
         })
       : dispatch(
@@ -107,6 +112,9 @@ function Admincars() {
     dispatch(deleteCar(getCurrentProductId)).then((data) => {
       if (data?.payload?.success) {
         dispatch(fetchAllCars());
+        toast({
+          title: "Product Deleted successfully",
+        });
       }
     });
   }
@@ -128,7 +136,7 @@ function Admincars() {
     <Fragment>
       <div className="flex justify-end w-full mb-5">
         <Button onClick={() => setOpenCreateProductsDialog(true)}>
-          Add New Product
+          Add New Car
         </Button>
       </div>
       <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">

@@ -62,10 +62,8 @@ const SideDrawer = () => {
       const config = {
         headers: { Authorization: `Bearer ${user.token}` },
       };
-      const { data } = await axios.get(
-        `/api/auth/search?search=${search}`,
-        config
-      );
+      const { data } = await axios.get(`/api/auth?search=${search}`, config);
+      setSearchResult(data);
       console.log("Search response data:", data);
       // Ensure the result is always an array
       setSearchResult(Array.isArray(data) ? data : data.users || []);

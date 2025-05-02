@@ -48,6 +48,8 @@ const addCar = async (req, res) => {
       isAvailable,
       averageReview,
       name,
+      aboutcar,
+      location,
     } = req.body;
 
     const newCar = new Car({
@@ -80,6 +82,8 @@ const addCar = async (req, res) => {
       isAvailable,
       averageReview,
       name,
+      aboutcar,
+      location,
     });
 
     await newCar.save();

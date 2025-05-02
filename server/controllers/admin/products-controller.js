@@ -35,8 +35,6 @@ const addProduct = async (req, res) => {
       averageReview,
     } = req.body;
 
-    console.log(averageReview, "averageReview");
-
     const newlyCreatedProduct = new Product({
       image,
       title,
@@ -50,9 +48,16 @@ const addProduct = async (req, res) => {
     });
 
     await newlyCreatedProduct.save();
+
+    const products = await Product.find({}); // fetch all after add
+
     res.status(201).json({
       success: true,
-      data: newlyCreatedProduct,
+      message: "Product added successfully",
+      data: {
+        newlyCreatedProduct,
+        products, // return fresh list
+      },
     });
   } catch (e) {
     console.log(e);
@@ -118,6 +123,7 @@ const editProduct = async (req, res) => {
     await findProduct.save();
     res.status(200).json({
       success: true,
+      message: "Product Edited successfully",
       data: findProduct,
     });
   } catch (e) {

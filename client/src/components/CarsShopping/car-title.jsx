@@ -9,11 +9,11 @@ function CarTile({ car, handleGetProductDetails, handleAddtoCart }) {
       <div onClick={() => handleGetProductDetails(car?._id)}>
         <div className="relative">
           <img
-            src={car?.image}
+            src={car?.image?.[0] || "/fallback.jpg"}
             alt={car?.title}
             className="w-full h-[300px] object-cover rounded-t-lg"
           />
-          {car?.totalStock === 0 ? (
+          {/* {car?.totalStock === 0 ? (
             <Badge className="absolute bg-red-500 top-2 left-2 hover:bg-red-600">
               Out Of Stock
             </Badge>
@@ -25,7 +25,7 @@ function CarTile({ car, handleGetProductDetails, handleAddtoCart }) {
             <Badge className="absolute bg-red-500 top-2 left-2 hover:bg-red-600">
               Sale
             </Badge>
-          ) : null}
+          ) : null} */}
         </div>
         <CardContent className="p-4">
           <h2 className="mb-2 text-xl font-bold">{car?.title}</h2>
@@ -37,19 +37,10 @@ function CarTile({ car, handleGetProductDetails, handleAddtoCart }) {
               {brandOptionsMap[car?.brand]}
             </span>
           </div>
-          <div className="flex items-center justify-between mb-2">
-            <span
-              className={`${
-                car?.salePrice > 0 ? "line-through" : ""
-              } text-lg font-semibold text-primary`}
-            >
-              ${car?.price}
-            </span>
-            {car?.salePrice > 0 ? (
-              <span className="text-lg font-semibold text-primary">
-                ${car?.salePrice}
-              </span>
-            ) : null}
+          <div className="flex justify-between mt-1 text-lg font-semibold">
+            <span>Booking ${car?.price}</span>
+
+            <span className="">Total ${car?.salePrice}</span>
           </div>
         </CardContent>
       </div>

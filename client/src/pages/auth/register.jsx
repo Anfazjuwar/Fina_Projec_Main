@@ -31,12 +31,14 @@ const RegisterForm = () => {
     dispatch(registerUser(formData)).then((data) => {
       if (data?.payload?.success) {
         toast({
-          title: data?.payload?.message,
+          title: data?.payload?.message || "Registration successful 👍",
         });
         navigate("/auth/login");
       } else {
         toast({
-          title: data?.payload?.message,
+          title:
+            data?.payload?.message ||
+            "Password or email already used or Something went wrong",
           variant: "destructive",
         });
       }

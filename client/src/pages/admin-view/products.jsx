@@ -61,6 +61,9 @@ function AdminProducts() {
             setFormData(initialFormData);
             setOpenCreateProductsDialog(false);
             setCurrentEditedId(null);
+            toast({
+              title: "Product edited successfully",
+            });
           }
         })
       : dispatch(
@@ -85,6 +88,9 @@ function AdminProducts() {
     dispatch(deleteProduct(getCurrentProductId)).then((data) => {
       if (data?.payload?.success) {
         dispatch(fetchAllProducts());
+        toast({
+          title: "Product Delelted successfully",
+        });
       }
     });
   }

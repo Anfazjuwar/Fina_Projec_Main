@@ -13,13 +13,16 @@ function AdminCarTile({
       <div onClick={() => console.log("View car details", car._id)}>
         <div className="relative">
           <img
-            src={car?.image[0]}
+            src={car?.image?.[0] || "/fallback.jpg"}
             alt={car?.title}
-            className="w-full h-[250px] object-cover rounded-t-lg"
+            className="w-full h-[300px] object-cover rounded-t-lg"
           />
         </div>
         <CardContent>
           <h2 className="mt-2 mb-1 text-xl font-bold">{car?.title}</h2>
+          <p className="text-sm truncate text-muted-foreground">
+            {car?.description}
+          </p>
           <p className="text-sm truncate text-muted-foreground">
             {car?.description}
           </p>
@@ -28,10 +31,9 @@ function AdminCarTile({
             <span>Year: {car?.year}</span>
           </div>
           <div className="flex justify-between mt-1 text-lg font-semibold">
-            <span>${car?.price}</span>
-            {car?.salePrice > 0 && (
-              <span className="text-red-600">${car?.salePrice}</span>
-            )}
+            <span>Sale Price ${car?.price} hi</span>
+
+            <span className="">Booking${car?.salePrice}</span>
           </div>
         </CardContent>
       </div>

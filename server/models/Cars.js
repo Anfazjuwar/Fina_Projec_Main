@@ -32,8 +32,9 @@ const CarSchema = new mongoose.Schema(
     sunroof: Boolean,
     bluetooth: Boolean,
     alloyWheels: Boolean,
-    newCar: Boolean,
-    usedCar: Boolean,
+    aboutcar: String,
+
+    location: String,
 
     // Flags
     isFeatured: { type: Boolean, default: false },

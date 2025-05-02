@@ -31,7 +31,7 @@ const Chatpage = () => {
   }
 
   return (
-    <div className="w-full h-screen">
+    <div className="w-full">
       <SideDrawer />
       <div className="flex justify-between w-full h-[91.5vh] p-2 gap-2">
         <MyChats fetchAgain={fetchAgain} />

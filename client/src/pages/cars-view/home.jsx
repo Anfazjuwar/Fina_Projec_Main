@@ -1,7 +1,4 @@
 import { Button } from "@/components/ui/button";
-import bannerOne from "../../assets/banner-1.webp";
-import bannerTwo from "../../assets/banner-2.webp";
-import bannerThree from "../../assets/banner-3.webp";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useState } from "react";
@@ -125,7 +122,7 @@ function ShoppingCarHome() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="relative w-full h-[600px] overflow-hidden">
+      <div className="relative w-full h-[700px] overflow-hidden">
         {featureImageList?.map((slide, index) => (
           <img
             key={index}
@@ -221,7 +218,6 @@ function ShoppingCarHome() {
         setOpen={setOpenDetailsDialog}
         carDetails={carDetails}
       />
-      >
     </div>
   );
 }

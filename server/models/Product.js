@@ -6,14 +6,38 @@ const ProductSchema = new mongoose.Schema(
       type: [String],
       required: true,
     },
-    title: String,
-    description: String,
-    category: String,
-    brand: String,
-    price: Number,
-    salePrice: Number,
-    totalStock: Number,
-    averageReview: Number,
+    title: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    category: {
+      type: String,
+      required: true,
+    },
+    brand: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    salePrice: {
+      type: Number,
+      default: 0, // optional: if not provided
+    },
+    totalStock: {
+      type: Number,
+      required: true,
+    },
+    averageReview: {
+      type: Number,
+      default: 0, // ✅ ADD DEFAULT VALUE
+    },
   },
   { timestamps: true }
 );

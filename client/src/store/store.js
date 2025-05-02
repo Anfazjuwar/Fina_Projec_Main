@@ -17,11 +17,12 @@ import CarsSellSlice from "./Cars/car-sell";
 import carOrderSlice from "./Cars/order-silce/order";
 import chatReducer from "./Chat/chat";
 import CarSearchSlice from "./Cars/search-slice";
+import adminUsersReducer from "./admin/authadmin-slider/admin";
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
-
+    adminUsers: adminUsersReducer,
     adminProducts: adminProductsSlice,
     adminOrder: adminOrderSlice,
     adminCarOrder: admincarOrderSlice,
