@@ -8,7 +8,7 @@ import store from "./store/store.js";
 import { Toaster } from "./components/ui/toaster.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
+  <BrowserRouter basename="/Fina_Projec_Main">
     <Provider store={store}>
       <App />
       <Toaster />
