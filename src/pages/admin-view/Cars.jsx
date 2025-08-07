@@ -51,6 +51,8 @@ const initialFormData = {
   isFeatured: false,
   isAvailable: true,
   averageReview: 0,
+  aboutCar: "",
+  location: "",
 };
 
 function Admincars() {

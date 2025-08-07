@@ -23,14 +23,17 @@ function AdminCarTile({
           <p className="text-sm truncate text-muted-foreground">
             {car?.description}
           </p>
+          <p className="text-sm truncate text-muted-foreground">
+            {car?.description}
+          </p>
           <div className="flex justify-between mt-2 text-sm">
             <span>Brand: {car?.brand}</span>
             <span>Year: {car?.year}</span>
           </div>
           <div className="flex justify-between mt-1 text-lg font-semibold">
-            <span>Booking ${car?.price}</span>
+            <span>Sale Price ${car?.price} hi</span>
 
-            <span className="">${car?.salePrice}</span>
+            <span className="">Booking${car?.salePrice}</span>
           </div>
         </CardContent>
       </div>

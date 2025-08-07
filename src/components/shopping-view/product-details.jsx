@@ -139,9 +139,10 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
 
         <div>
           <h1 className="text-3xl font-extrabold">{productDetails?.title}</h1>
-          <p className="mt-4 mb-5 text-2xl text-muted-foreground">
+          <div className="mt-4 mb-5 max-h-[150px] overflow-auto pr-2 text-muted-foreground text-sm sm:text-base">
             {productDetails?.description}
-          </p>
+          </div>
+
           <div className="flex items-center justify-between">
             <p
               className={`text-3xl font-bold text-primary ${

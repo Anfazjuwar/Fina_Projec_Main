@@ -1,5 +1,6 @@
 import {
   BadgeCheck,
+  BadgeCheckIcon,
   Car,
   Caravan,
   CarFront,
@@ -55,6 +56,12 @@ const adminSidebarMenuItems = [
     label: "Chat",
     path: "/admin/chat",
     icon: <Car />,
+  },
+  {
+    id: "Users",
+    label: "useradmin",
+    path: "/admin/user",
+    icon: <BadgeCheckIcon />,
   },
 ];
 
